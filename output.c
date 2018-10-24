@@ -6,25 +6,26 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/29 11:25:26 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/09/30 22:38:29 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/10/23 19:21:46 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl_md5.h"
 
-int		flags(char **argv, int *pqrs)
+int		flags(char **argv, int pqrs)
 {
 	int	i;
 
 	i = 1;
+	pqrs = 0;
 	while (argv[i])
 	{
 		if (argv[i][0] == '-')
 		{
-			pqrs[0] = ft_strchr(argv[i], 'p') ? 1 : 0;
-			pqrs[1] = ft_strchr(argv[i], 'q') ? 1 : 0;
-			pqrs[2] = ft_strchr(argv[i], 'r') ? 1 : 0;
-			pqrs[3] = ft_strchr(argv[i], 's') ? 1 : 0;
+			pqrs = pqrs + (ft_strchr(argv[i], 'p') ? 1000 : 0);
+			pqrs = pqrs + (ft_strchr(argv[i], 'q') ? 100 : 0);
+			pqrs = pqrs + (ft_strchr(argv[i], 'r') ? 10 : 0);
+			pqrs = pqrs + (ft_strchr(argv[i], 's') ? 1 : 0);
 		}
 		else
 			break;
@@ -66,7 +67,6 @@ char	*flag_s(char **argv)
 	len = ft_strlen(argv[1]);
 	if (argv[1][0] == '-' && argv[1][1] == 's')
 	{
-		printf("here?\n");
 		if (len > 2)
 		{
 			str = (char *)malloc(sizeof(char) * (len - 2));
@@ -90,6 +90,6 @@ char	*flag_s(char **argv)
 	}
 	else
 		str = NULL;
-	printf("%s\n", str);
+	// printf("%s\n", str);
 	return (str);
 }

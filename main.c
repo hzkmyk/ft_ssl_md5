@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/26 12:46:30 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/09/30 22:36:30 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/10/23 18:29:31 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,9 @@ int			main(int argc, char **argv)
 	int			**yay;
 	u_int32_t	**nay;
 	int			i;
-	int			pqrs[4];
-	// char		*file;
-	// char		**line;
+	int			pqrs;
+	char		*file;
+	char		**line;
 	char		*str;
 
 	blocks[0] = 0;
@@ -89,38 +89,36 @@ int			main(int argc, char **argv)
 	i = flags(argv, pqrs);
 	while (argv[i])
 	{
-		printf("%d\n", pqrs[3]);
 		if (pqrs[3])
 		{
-			printf("here?\n");
 			str = flag_s(argv);
 			yay = padding(str, blocks);
 			nay = words(yay, blocks);
 			rounds_and_fix(blocks, nay);
-			ft_printf("MD5 (%s) = %.8x%.8x%.8x%.8x\n", argv[i], iv[0], iv[1], iv[2], iv[3]);
+			ft_printf("MD5 (\"%s\") = %.8x%.8x%.8x%.8x\n", argv[i], iv[0], iv[1], iv[2], iv[3]);
 		}
-		// if (!pqrs[3])
-		// {
-		// 	if (is_file(argv[i]))
-		// 	{
-		// 		line = (char **)malloc(sizeof(char *));
-		// 		file = save_line(argv);
-		// 		yay = padding(file, blocks);
-		// 		nay = words(yay, blocks);
-		// 		rounds_and_fix(blocks, nay);
-		// 		ft_printf("MD5 (%s) = %.8x%.8x%.8x%.8x\n", argv[i], iv[0], iv[1], iv[2], iv[3]);
-		// 	}
-		// 	else if (is_directory(argv[i]))
-		// 		ft_printf("md5: %s: Is a directory\n", argv[i]);
-		// 	else
-		// 		perror("EROOR");
-		// 	i++;
-		// 	continue ;
-		// }
-		// yay = padding(argv[i], blocks);
-		// nay = words(yay, blocks);
-		// rounds_and_fix(blocks, nay);
-		// ft_printf("MD5 (\"%s\") = %.8x%.8x%.8x%.8x\n", argv[i], iv[0], iv[1], iv[2], iv[3]);
+		if (!pqrs[3])
+		{
+			if (is_file(argv[i]))
+			{
+				line = (char **)malloc(sizeof(char *));
+				file = save_line(argv);
+				yay = padding(file, blocks);
+				nay = words(yay, blocks);
+				rounds_and_fix(blocks, nay);
+				ft_printf("MD5 (%s) = %.8x%.8x%.8x%.8x\n", argv[i], iv[0], iv[1], iv[2], iv[3]);
+			}
+			else if (is_directory(argv[i]))
+				ft_printf("md5: %s: Is a directory\n", argv[i]);
+			else
+				perror("EROOR");
+			i++;
+			continue ;
+		}
+		yay = padding(argv[i], blocks);
+		nay = words(yay, blocks);
+		rounds_and_fix(blocks, nay);
+		ft_printf("MD5 (\"%s\") = %.8x%.8x%.8x%.8x\n", argv[i], iv[0], iv[1], iv[2], iv[3]);
 		i++;
 	}
 	return (0);

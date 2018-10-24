@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/25 09:55:15 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/09/30 22:21:04 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/10/23 18:21:39 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@
 # include <errno.h>
 # include <fcntl.h>
 
+# define P 0x01
+# define Q 0x02
+# define R 0x04
+# define S 0x08
+# define MATCH ()
 /* padding.c */
 int			**padding(const char *argv, int *blocks);
 u_int32_t	**words(int **yay, int *blocks);
