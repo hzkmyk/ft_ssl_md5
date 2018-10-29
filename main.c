@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/29 12:10:15 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/10/29 12:37:09 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/10/29 15:16:36 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void dsptch(int argc, char **argv)
     int i;
 
     i = 0;
-    while (i < 1)
+    while (i < 2)
     {
         if (ft_strequ(argv[1], dsptch_table[i].name))
         {
@@ -30,7 +30,7 @@ void dsptch(int argc, char **argv)
             break ;
         }
     }
-    return (0);
+    return ;
 }
 
 int main(int argc, char **argv)

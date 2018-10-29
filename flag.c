@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/29 11:25:26 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/10/29 11:46:17 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/10/29 15:29:01 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int		flags(char **argv, int *pqrs)
 	int	i;
 	int len;
 
-	i = 1;
+	i = 2;
 	*pqrs = 0;
 	len = 0;
 	while (argv[i])

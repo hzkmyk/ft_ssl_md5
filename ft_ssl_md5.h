@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/25 09:55:15 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/10/29 12:36:47 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/10/29 15:19:40 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # define R 2
 # define S 1
 
-typedef void		(hash)(int, char **);
+typedef void	(hash)(int, char **);
 
 typedef struct		s_dsptch
 {
@@ -35,7 +35,7 @@ typedef struct		s_dsptch
 /* padding.c */
 int			**padding(const char *argv, int *blocks);
 u_int32_t	**words(int **yay, int *blocks);
-int		**malloc_blocks(const char *argv, int *blocks);
+int			**malloc_blocks(const char *argv, int *blocks);
 
 u_int32_t	rotate(const int rot, u_int32_t x);
 void		fix_value(int *iv);
@@ -47,21 +47,21 @@ void		round_3(int *iv, const int *rot, const int *k, u_int32_t *nay);
 void		round_4(int *iv, const int *rot, const int *k, u_int32_t *nay);
 
 /* fghi.c */
-int	f(int *iv);
-int	g(int *iv);
-int	h(int *iv);
-int	i(int *iv);
+int			f(int *iv);
+int			g(int *iv);
+int			h(int *iv);
+int			i(int *iv);
 
 /* output.c */
-int		flags(char **argv, int *pqrs);
-char	*save_line(char **argv, int i);
-char	*flag_s(char **argv);
+int			flags(char **argv, int *pqrs);
+char		*save_line(char **argv, int i);
+char		*flag_s(char **argv);
 
 /* check.c */
-int	is_directory(char *argv);
-int	is_file(char *argv);
+int			is_directory(char *argv);
+int			is_file(char *argv);
 
 /* md5.c */
-int md5(int argc, char **argv);
+void		md5(int argc, char **argv);
 
 #endif

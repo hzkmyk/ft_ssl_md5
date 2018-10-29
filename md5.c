@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/26 12:46:30 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/10/29 12:20:02 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/10/29 16:20:43 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void		rounds_and_fix(int *blocks, u_int32_t **nay)
 	fix_value(iv);
 }
 
-void	def(int *pqrs, int **yay, int **nay, int *blocks)
+void	def(int *pqrs, int **yay, u_int32_t **nay, int *blocks)
 {
 	char		buff[1024];
 	char		*input;
@@ -95,7 +95,7 @@ void	def(int *pqrs, int **yay, int **nay, int *blocks)
 }
 
 
-void	flagP(int *pqrs, int **yay, int **nay, int *blocks)
+void	flagP(int *pqrs, int **yay, u_int32_t **nay, int *blocks)
 {
 	def(pqrs, yay, nay, blocks);
 	*pqrs = *pqrs & 7;
@@ -160,7 +160,7 @@ void	flagS(char **argv, int i, int *blocks, int *pqrs)
 		ft_printf("MD5 (\"%s\") = %.8x%.8x%.8x%.8x\n", argv[i] + (len + 1), iv[0], iv[1], iv[2], iv[3]);
 }
 
-int			md5(int argc, char **argv)
+void			md5(int argc, char **argv)
 {
 	int			blocks[1];
 	int			**yay;
@@ -169,19 +169,18 @@ int			md5(int argc, char **argv)
 	int			*pqrs;
 
 	blocks[0] = 0;
-	if (argc < 2)
-		;
-	if (argv)
-		;
+	if (argc == 1)
+		ft_printf("md5 or sha256?");
+	yay = NULL;
+	nay = NULL;
 	pqrs = (int *)malloc(sizeof(int));
 	i = flags(argv, pqrs);
 	if (ISSAME(*pqrs, P))
 		flagP(pqrs, yay, nay, blocks);
-	if (argv[i] == NULL)
+	else if (argv[i] == NULL)
 		def(pqrs, yay, nay, blocks);
-	else if ((!ISSAME(*pqrs, P) && !ISSAME(*pqrs, S) && (argv[i])))
+	if ((!ISSAME(*pqrs, P) && !ISSAME(*pqrs, S) && (argv[i])))
 		def_with_arg(argv, blocks, i, pqrs);
 	if (ISSAME(*pqrs, S))
 		flagS(argv, i, blocks, pqrs);
-	return (0);
 }
