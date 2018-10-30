@@ -1,22 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdel.c                                        :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/07/10 22:19:17 by syamada           #+#    #+#             */
-/*   Updated: 2018/10/29 17:01:06 by hmiyake          ###   ########.fr       */
+/*   Created: 2018/04/24 11:42:51 by hmiyake           #+#    #+#             */
+/*   Updated: 2018/10/19 01:51:31 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_strdel(char **as)
+void	*ft_memset(void *b, int c, size_t len)
 {
-	if (as && *as)
+	size_t	i;
+	char	*ptr;
+
+	i = 0;
+	ptr = (char *)b;
+	while (i < len)
 	{
-		free(*as);
-		*as = NULL;
+		ptr[i] = c;
+		i++;
 	}
+	return (b);
 }

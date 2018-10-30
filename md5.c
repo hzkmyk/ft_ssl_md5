@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/26 12:46:30 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/10/29 16:41:19 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/10/29 17:53:36 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ void	def(int *pqrs, int **yay, u_int32_t **nay, int *blocks)
 	yay = padding(input, blocks);
 	nay = words(yay, blocks);
 	rounds_and_fix(blocks, nay);
+	ft_fdintdel(&yay);
+	ft_fduintdel(&nay);
 	ft_printf("%.8x%.8x%.8x%.8x\n", iv[0], iv[1], iv[2], iv[3]);
 }
 
