@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 15:00:34 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/10/25 11:55:09 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/10/29 17:51:14 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,13 @@ int					ft_do_op(int num1, char op, int num2);
 void				ft_swap(int *a, int *b);
 char				*ft_strrev(char *str);
 char				*ft_strjoin(char const *s1, char const *s2);
-
+void    			ft_tdmemdel(void ***ap);
 int					new_line_checker(int fd, char **line, char**joyce);
 void				temp_to_joyce(int fd, char **joyce, char *buff);
 int					get_next_line(const int fd, char **line);
 
+void	ft_intdel(int **as);
+void    ft_fdintdel(int ***ap);
+void    ft_fduintdel(u_int32_t ***ap);
+void	ft_uintdel(u_int32_t **as);
 #endif

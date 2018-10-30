@@ -1,22 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdel.c                                        :+:      :+:    :+:   */
+/*   ft_tdstrdel.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/07/10 22:19:17 by syamada           #+#    #+#             */
-/*   Updated: 2018/10/29 17:01:06 by hmiyake          ###   ########.fr       */
+/*   Created: 2018/08/30 18:10:53 by syamada           #+#    #+#             */
+/*   Updated: 2018/10/29 17:15:16 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_strdel(char **as)
+void		ft_tdstrdel(char ***tdstr)
 {
-	if (as && *as)
+	int		i;
+	char	**tmp;
+
+	i = 0;
+	tmp = *tdstr;
+	if (tmp && *tmp)
 	{
-		free(*as);
-		*as = NULL;
+		while (tmp[i])
+			ft_strdel(&tmp[i++]);
+		free(tmp);
+		tmp = NULL;
 	}
 }
