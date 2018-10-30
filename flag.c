@@ -69,7 +69,7 @@ char	*flag_s(char **argv)
 	size_t	i;
 	size_t	len;
 	char	*str;
-	
+
 	i = 2;
 	len = ft_strlen(argv[1]);
 	if (argv[1][0] == '-' && argv[1][1] == 's')
