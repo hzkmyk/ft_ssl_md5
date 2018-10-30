@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/26 12:46:30 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/10/29 17:53:36 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/10/29 22:58:04 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,18 +105,19 @@ void	flagP(int *pqrs, int **yay, u_int32_t **nay, int *blocks)
 
 void	def_with_arg(char **argv, int *blocks, int i, int *pqrs)
 {
-	int			**yay;
-	u_int32_t	**nay;
+	int			**yay1;
+	u_int32_t	**nay2;
 	char		*file;
 	char		**line;
 	
 	if (is_file(argv[i]))
 	{
+		printf("%s\n",argv[i]);
 		line = (char **)malloc(sizeof(char *));
 		file = save_line(argv, i);
-		yay = padding(file, blocks);
-		nay = words(yay, blocks);
-		rounds_and_fix(blocks, nay);
+		yay1 = padding(file, blocks);
+		nay2 = words(yay1, blocks);
+		rounds_and_fix(blocks, nay2);
 		if (ISSAME(*pqrs, Q))
 			ft_printf("%.8x%.8x%.8x%.8x\n", iv[0], iv[1], iv[2], iv[3]);
 		else if (ISSAME(*pqrs, R))
@@ -182,7 +183,17 @@ void			md5(int argc, char **argv)
 	else if (argv[i] == NULL)
 		def(pqrs, yay, nay, blocks);
 	if ((!ISSAME(*pqrs, P) && !ISSAME(*pqrs, S) && (argv[i])))
+	{
+		iv[0] = 0x67452301;
+		iv[1] = 0xefcdab89;
+		iv[2] = 0x98badcfe;
+		iv[3] = 0x10325476;
+		uv[0] = 0x67452301;
+		uv[1] = 0xefcdab89;
+		uv[2] = 0x98badcfe;
+		uv[3] = 0x10325476;
 		def_with_arg(argv, blocks, i, pqrs);
+	}
 	if (ISSAME(*pqrs, S))
 		flagS(argv, i, blocks, pqrs);
 }

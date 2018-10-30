@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/26 13:46:08 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/09/29 23:08:58 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/10/29 22:11:27 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int		**malloc_blocks(const char *argv, int *blocks)
 	while (j < blocks[0])
 	{
 		yay[j] = (int *)malloc(sizeof(int) * 64);
+		ft_bzero(yay[j], 64);
 		j++;
 	}
 	return (yay);
@@ -54,22 +55,17 @@ int		**padding(const char *argv, int *blocks)
 			k++;
 		}
 		i++;
+		if (!argv[k])
+			break;
 	}
 	i -= 1;
 	yay[i][j] = 128;
 	j++;
-	while (j < 56)
-	{
-		yay[i][j] = 0;
-		j++;
-	}
+	if (j > 55)
+		i++;
+	j = 56;
 	yay[i][j] = (int)ft_strlen(argv) * 8;
-	j++;
-	while (j < 64)
-	{
-		yay[i][j] = 0;
-		j++;
-	}
+	i = 0;
 	return (yay);
 }
 
