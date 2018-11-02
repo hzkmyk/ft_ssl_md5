@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/26 12:46:30 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/10/29 22:58:04 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/01 22:52:21 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,45 +38,52 @@ const int	k[64] = {
 	0xf7537e82, 0xbd3af235, 0x2ad7d2bb, 0xeb86d391
 };
 
-int			iv[4] = {
-	0x67452301, 0xefcdab89, 0x98badcfe, 0x10325476
-};
+t_initial	*initializeIvUv(t_initial *in)
+{
+	in->iv[0] = 0x67452301;
+	in->iv[1] = 0xefcdab89;
+	in->iv[2] = 0x98badcfe;
+	in->iv[3] = 0x10325476;
+	in->uv[0] = 0x67452301;
+	in->uv[1] = 0xefcdab89;
+	in->uv[2] = 0x98badcfe;
+	in->uv[3] = 0x10325476;
+	return (in);
+}
 
-int			uv[4] = {
-	0x67452301, 0xefcdab89, 0x98badcfe, 0x10325476
-};
-
-void		rounds_and_fix(int *blocks, u_int32_t **nay)
+void		rounds_and_fix(int *blocks, u_int32_t **nay, t_initial *in)
 {
 	int	i;
 
 	i = 0;
 	while (i < blocks[0])
 	{
-		round_1(iv, rot, k, nay[i]);
-		round_2(iv, rot, k, nay[i]);
-		round_3(iv, rot, k, nay[i]);
-		round_4(iv, rot, k, nay[i]);
-		iv[0] += uv[0];
-		iv[1] += uv[1];
-		iv[2] += uv[2];
-		iv[3] += uv[3];
-		uv[0] = iv[0];
-		uv[1] = iv[1];
-		uv[2] = iv[2];
-		uv[3] = iv[3];
+		round_1(in->iv, rot, k, nay[i]);
+		round_2(in->iv, rot, k, nay[i]);
+		round_3(in->iv, rot, k, nay[i]);
+		round_4(in->iv, rot, k, nay[i]);
+		in->iv[0] += in->uv[0];
+		in->iv[1] += in->uv[1];
+		in->iv[2] += in->uv[2];
+		in->iv[3] += in->uv[3];
+		in->uv[0] = in->iv[0];
+		in->uv[1] = in->iv[1];
+		in->uv[2] = in->iv[2];
+		in->uv[3] = in->iv[3];
 		i++;
 	}
-	fix_value(iv);
+	fix_value(in->iv);
 }
 
-void	def(int *pqrs, int **yay, u_int32_t **nay, int *blocks)
+void	def(int *pqrs, int **yay, u_int32_t **nay, t_initial *in)
 {
 	char		buff[1024];
 	char		*input;
 	int			readsize;
 	char		*tmp;
-	
+	int			blocks[1];
+
+	blocks[0] = 0;
 	input = ft_strnew(0);
 	while ((readsize = read(0, buff, 1024)))
 	{
@@ -90,53 +97,58 @@ void	def(int *pqrs, int **yay, u_int32_t **nay, int *blocks)
 		ft_printf("%s", input);
 	yay = padding(input, blocks);
 	nay = words(yay, blocks);
-	rounds_and_fix(blocks, nay);
+	rounds_and_fix(blocks, nay, in);
+	ft_strdel(&input);
 	ft_fdintdel(&yay);
 	ft_fduintdel(&nay);
-	ft_printf("%.8x%.8x%.8x%.8x\n", iv[0], iv[1], iv[2], iv[3]);
+	ft_printf("%.8x%.8x%.8x%.8x\n", in->iv[0], in->iv[1], in->iv[2], in->iv[3]);
 }
 
 
-void	flagP(int *pqrs, int **yay, u_int32_t **nay, int *blocks)
+void	flagP(int *pqrs, int **yay, u_int32_t **nay, t_initial *in)
 {
-	def(pqrs, yay, nay, blocks);
+	def(pqrs, yay, nay, in);
 	*pqrs = *pqrs & 7;
 }
 
-void	def_with_arg(char **argv, int *blocks, int i, int *pqrs)
+void	def_with_arg(char **argv, int i, int *pqrs, t_initial *in)
 {
-	int			**yay1;
-	u_int32_t	**nay2;
+	int			**yay;
+	u_int32_t	**nay;
 	char		*file;
-	char		**line;
+	int			blocks[1];
 	
+	blocks[0] = 0;
 	if (is_file(argv[i]))
 	{
-		printf("%s\n",argv[i]);
-		line = (char **)malloc(sizeof(char *));
 		file = save_line(argv, i);
-		yay1 = padding(file, blocks);
-		nay2 = words(yay1, blocks);
-		rounds_and_fix(blocks, nay2);
+		yay = padding(file, blocks);
+		nay = words(yay, blocks);
+		rounds_and_fix(blocks, nay, in);
+		ft_strdel(&file);
+		ft_fdintdel(&yay);
+		ft_fduintdel(&nay);
 		if (ISSAME(*pqrs, Q))
-			ft_printf("%.8x%.8x%.8x%.8x\n", iv[0], iv[1], iv[2], iv[3]);
+			ft_printf("%.8x%.8x%.8x%.8x\n", in->iv[0], in->iv[1], in->iv[2], in->iv[3]);
 		else if (ISSAME(*pqrs, R))
-			ft_printf("%.8x%.8x%.8x%.8x %s\n", iv[0], iv[1], iv[2], iv[3], argv[i]);
+			ft_printf("%.8x%.8x%.8x%.8x %s\n", in->iv[0], in->iv[1], in->iv[2], in->iv[3], argv[i]);
 		else
-			ft_printf("MD5 (%s) = %.8x%.8x%.8x%.8x\n", argv[i], iv[0], iv[1], iv[2], iv[3]);
+			ft_printf("MD5 (%s) = %.8x%.8x%.8x%.8x\n", argv[i], in->iv[0], in->iv[1], in->iv[2], in->iv[3]);
 	}
 	else if (is_directory(argv[i]))
 		ft_printf("md5: %s: Is a directory\n", argv[i]);
 	else
-		perror("EROOR");
+		ft_printf("ft_ssl: md5: %s: %s\n", argv[i], strerror(errno));
 }
 
-void	flagS(char **argv, int i, int *blocks, int *pqrs)
+int		flagS(char **argv, int i, int *pqrs, t_initial *in)
 {
 	int			len;
 	int			**yay;
 	u_int32_t	**nay;
+	int			blocks[1];
 	
+	blocks[0] = 0;
 	if ((len = ft_strchr_i(argv[i], 's')) > 0 && argv[i][len + 1])
 		yay = padding(argv[i] + (len + 1), blocks);
 	else
@@ -154,46 +166,70 @@ void	flagS(char **argv, int i, int *blocks, int *pqrs)
 		}
 	}
 	nay = words(yay, blocks);
-	rounds_and_fix(blocks, nay);
+	rounds_and_fix(blocks, nay, in);
 	if (ISSAME(*pqrs, Q))
-		ft_printf("%.8x%.8x%.8x%.8x\n", iv[0], iv[1], iv[2], iv[3]);
+		ft_printf("%.8x%.8x%.8x%.8x\n", in->iv[0], in->iv[1], in->iv[2], in->iv[3]);
 	else if (ISSAME(*pqrs, R))
-		ft_printf("%.8x%.8x%.8x%.8x \"%s\"\n", iv[0], iv[1], iv[2], iv[3], argv[i] + (len + 1));
+		ft_printf("%.8x%.8x%.8x%.8x \"%s\"\n", in->iv[0], in->iv[1], in->iv[2], in->iv[3], argv[i] + (len + 1));
 	else
-		ft_printf("MD5 (\"%s\") = %.8x%.8x%.8x%.8x\n", argv[i] + (len + 1), iv[0], iv[1], iv[2], iv[3]);
+		ft_printf("MD5 (\"%s\") = %.8x%.8x%.8x%.8x\n", argv[i] + (len + 1), in->iv[0], in->iv[1], in->iv[2], in->iv[3]);
+	return (i);
 }
 
 void			md5(int argc, char **argv)
 {
-	int			blocks[1];
 	int			**yay;
 	u_int32_t	**nay;
 	int			i;
 	int			*pqrs;
+	t_initial	*in;
+	int			aaa;
 
-	blocks[0] = 0;
-	if (argc == 1)
-		ft_printf("md5 or sha256?");
+	in = (t_initial *)malloc(sizeof(t_initial));
+	initializeIvUv(in);
 	yay = NULL;
 	nay = NULL;
 	pqrs = (int *)malloc(sizeof(int));
-	i = flags(argv, pqrs);
-	if (ISSAME(*pqrs, P))
-		flagP(pqrs, yay, nay, blocks);
-	else if (argv[i] == NULL)
-		def(pqrs, yay, nay, blocks);
-	if ((!ISSAME(*pqrs, P) && !ISSAME(*pqrs, S) && (argv[i])))
+	*pqrs = 0;
+	aaa = 0;
+	i = 2;
+	if (argc == 2)
 	{
-		iv[0] = 0x67452301;
-		iv[1] = 0xefcdab89;
-		iv[2] = 0x98badcfe;
-		iv[3] = 0x10325476;
-		uv[0] = 0x67452301;
-		uv[1] = 0xefcdab89;
-		uv[2] = 0x98badcfe;
-		uv[3] = 0x10325476;
-		def_with_arg(argv, blocks, i, pqrs);
+		def(pqrs, yay, nay, in);
+		exit (0);
 	}
-	if (ISSAME(*pqrs, S))
-		flagS(argv, i, blocks, pqrs);
+	do 
+	{	
+		i = flags(argv, pqrs, i, in);
+		if (ISSAME(*pqrs, P))
+		{
+			if (aaa == 1)
+				aaa = 2;
+			initializeIvUv(in);
+			flagP(pqrs, yay, nay, in);
+			continue ;
+		}
+		else if (argv[i] == NULL)
+		{
+			if (aaa == 1)
+				aaa = 2;
+			def(pqrs, yay, nay, in);
+			break;
+		}
+		if (((!ISSAME(*pqrs, P) && !ISSAME(*pqrs, S) && (argv[i]))) || aaa == 2)
+		{
+			if (aaa == 1)
+				aaa = 2;
+			initializeIvUv(in);
+			def_with_arg(argv, i, pqrs, in);
+		}
+		if (ISSAME(*pqrs, S) && aaa != 2)
+		{
+			initializeIvUv(in);
+			i = flagS(argv, i, pqrs, in);
+			aaa = 1;
+		}
+		i++;
+	} while (argv[i]);
+	free (pqrs);
 }

@@ -6,28 +6,28 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 16:57:50 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/09/27 19:51:29 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/01 22:53:52 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl_md5.h"
 
-int	f(int *iv)
+u_int32_t	f(u_int32_t *iv)
 {
 	return ((iv[1] & iv[2]) | (~iv[1] & iv[3]));
 }
 
-int	g(int *iv)
+u_int32_t	g(u_int32_t *iv)
 {
 	return ((iv[1] & iv[3]) | (iv[2] & ~ iv[3]));
 }
 
-int	h(int *iv)
+u_int32_t	h(u_int32_t *iv)
 {
 	return (iv[1] ^ iv[2] ^ iv[3]);
 }
 
-int	i(int *iv)
+u_int32_t	i(u_int32_t *iv)
 {
 	return (iv[2] ^ (iv[1] | ~iv[3]));
 }

@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/26 13:46:08 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/10/29 22:11:27 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/01 17:17:31 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,36 +69,32 @@ int		**padding(const char *argv, int *blocks)
 	return (yay);
 }
 
-u_int32_t	**words(int **yay, int *blocks)
+int		**sha256Padding(const char *argv, int *blocks)
 {
-	u_int32_t	**nay;
-	int			i;
-	int			j;
-	int			k;
+	int	i;
+	int	j;
+	int	k;
+	int	**yay;
 
-	j = 0;
+	i = 0;
 	k = 0;
-	nay = (u_int32_t **)malloc(sizeof(u_int32_t *) * blocks[0]);
-	while (k < blocks[0])
+	yay = malloc_blocks(argv, blocks);
+	while (i < blocks[0])
 	{
-		nay[k] = (u_int32_t *)malloc(sizeof(u_int32_t) * 16);
-		k++;
-	}
-	k = 0;
-	while (k < blocks[0])
-	{
-		i = 0;
 		j = 0;
-		while (i < 64)
+		while (j < 64 && argv[k])
 		{
-			nay[k][j] = yay[k][i + 3] << 24;
-			nay[k][j] = nay[k][j] + (yay[k][i + 2] << 16);
-			nay[k][j] = nay[k][j] + (yay[k][i + 1] << 8);
-			nay[k][j] = nay[k][j] + yay[k][i];
-			i += 4;
-			j += 1;
+			yay[i][j] = argv[k];
+			j++;
+			k++;
 		}
-		k++;
+		i++;
+		if (!argv[k])
+			break;
 	}
-	return (nay);
+	i -= 1;
+	yay[i][j] = 128;
+	j = 63;
+	yay[i][j] = (int)ft_strlen(argv) * 8;
+	return (yay);
 }

@@ -6,13 +6,13 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 21:48:48 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/09/28 11:23:01 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/01 22:55:39 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl_md5.h"
 
-void	switch_iv(int *iv)
+void	switch_iv(u_int32_t *iv)
 {
 	int	tmp0;
 	int	tmp1;
@@ -30,7 +30,7 @@ void	switch_iv(int *iv)
 	iv[0] = tmp3;
 }
 
-void	round_1(int *iv, const int *rot, const int *k, u_int32_t *nay)
+void	round_1(u_int32_t *iv, const int *rot, const int *k, u_int32_t *nay)
 {
 	int			i;
 	u_int32_t	tmp;
@@ -39,14 +39,14 @@ void	round_1(int *iv, const int *rot, const int *k, u_int32_t *nay)
 	while (i < 16)
 	{
 		tmp = iv[0] + f(iv) + nay[i] + k[i];
-		tmp = rotate(rot[i], tmp);
+		tmp = LEFTROTATE(rot[i], tmp);
 		iv[0] =(iv[1] + tmp);
 		switch_iv(iv);
 		i++;
 	}
 }
 
-void	round_2(int *iv, const int *rot, const int *k, u_int32_t *nay)
+void	round_2(u_int32_t *iv, const int *rot, const int *k, u_int32_t *nay)
 {
 	int			i;
 	u_int32_t	tmp;
@@ -55,14 +55,14 @@ void	round_2(int *iv, const int *rot, const int *k, u_int32_t *nay)
 	while (i < 32)
 	{
 		tmp = iv[0] + g(iv) + nay[((i * 5) + 1) % 16] + k[i];
-		tmp = rotate(rot[i], tmp);
+		tmp = LEFTROTATE(rot[i], tmp);
 		iv[0] =(iv[1] + tmp);
 		switch_iv(iv);
 		i++;
 	}
 }
 
-void	round_3(int *iv, const int *rot, const int *k, u_int32_t *nay)
+void	round_3(u_int32_t *iv, const int *rot, const int *k, u_int32_t *nay)
 {
 	int			i;
 	u_int32_t	tmp;
@@ -71,14 +71,14 @@ void	round_3(int *iv, const int *rot, const int *k, u_int32_t *nay)
 	while (i < 48)
 	{
 		tmp = iv[0] + h(iv) + nay[((i * 3) + 5) % 16] + k[i];
-		tmp = rotate(rot[i], tmp);
+		tmp = LEFTROTATE(rot[i], tmp);
 		iv[0] =(iv[1] + tmp);
 		switch_iv(iv);
 		i++;
 	}
 }
 
-void	round_4(int *iv, const int *rot, const int *k, u_int32_t *nay)
+void	round_4(u_int32_t *iv, const int *rot, const int *k, u_int32_t *nay)
 {
 	int			j;
 	u_int32_t	tmp;
@@ -87,7 +87,7 @@ void	round_4(int *iv, const int *rot, const int *k, u_int32_t *nay)
 	while (j < 64)
 	{
 		tmp = iv[0] + i(iv) + nay[(j * 7) % 16] + k[j];
-		tmp = rotate(rot[j], tmp);
+		tmp = LEFTROTATE(rot[j], tmp);
 		iv[0] =(iv[1] + tmp);
 		switch_iv(iv);
 		j++;

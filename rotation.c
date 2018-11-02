@@ -6,23 +6,11 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 21:22:27 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/09/30 14:29:22 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/01 23:24:08 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ssl_md5.h"
-
-u_int32_t	rotate(const int rot, u_int32_t x)
-{
-	// return (x << rot | x >> (32 - rot));
-	u_int32_t tmp;
-
-	tmp = x;
-	tmp = tmp << rot;
-	x = x >> (32 - rot);
-	x = x + tmp;
-	return (x);
-}
 
 int			little_endian(int iv)
 {
@@ -36,7 +24,7 @@ int			little_endian(int iv)
 	return (tmp[0]); 
 }
 
-void		fix_value(int *iv)
+void		fix_value(u_int32_t *iv)
 {
 	int i;
 

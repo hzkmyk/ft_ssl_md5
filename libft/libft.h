@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 15:00:34 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/10/29 17:51:14 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/10/30 12:10:05 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,5 @@ void	ft_intdel(int **as);
 void    ft_fdintdel(int ***ap);
 void    ft_fduintdel(u_int32_t ***ap);
 void	ft_uintdel(u_int32_t **as);
+void		ft_tdstrdel(char ***tdstr);
 #endif
