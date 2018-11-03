@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/26 12:46:30 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/02 17:51:09 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/03 15:36:09 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void		rounds_and_fix(t_ssl *ssl)
 	fix_value(ssl->iv);
 }
 
-void	def(t_ssl *ssl)
+void	def(t_ssl *ssl, int *i)
 {
 	char		buff[1024];
 	char		*input;
@@ -82,6 +82,7 @@ void	def(t_ssl *ssl)
 	char		*tmp;
 
 	initializeIvUv(ssl);
+	i[1] = disableS(i);
 	input = ft_strnew(0);
 	while ((readsize = read(0, buff, 1024)))
 	{
@@ -102,20 +103,21 @@ void	def(t_ssl *ssl)
 	ft_printf("%.8x%.8x%.8x%.8x\n", ssl->iv[0], ssl->iv[1], ssl->iv[2], ssl->iv[3]);
 }
 
-void	flagP(t_ssl *ssl)
+void	flagP(t_ssl *ssl, int *i)
 {
-	def(ssl);
+	def(ssl, i);
 	*ssl->pqrs = *ssl->pqrs & 7;
 }
 
-void	def_with_arg(char **argv, int i, t_ssl *ssl)
+void	def_with_arg(char **argv, int *i, t_ssl *ssl)
 {
 	char		*file;
 
 	initializeIvUv(ssl);
-	if (is_file(argv[i]))
+	i[1] = disableS(i);
+	if (is_file(argv[i[0]]))
 	{
-		file = save_line(argv, i);
+		file = save_line(argv, i[0]);
 		ssl->block = padding(file, ssl);
 		ssl->word = words(ssl->block, ssl->numBlock);
 		rounds_and_fix(ssl);
@@ -125,30 +127,30 @@ void	def_with_arg(char **argv, int i, t_ssl *ssl)
 		if (ISSAME(*ssl->pqrs, Q))
 			ft_printf("%.8x%.8x%.8x%.8x\n", ssl->iv[0], ssl->iv[1], ssl->iv[2], ssl->iv[3]);
 		else if (ISSAME(*ssl->pqrs, R))
-			ft_printf("%.8x%.8x%.8x%.8x %s\n", ssl->iv[0], ssl->iv[1], ssl->iv[2], ssl->iv[3], argv[i]);
+			ft_printf("%.8x%.8x%.8x%.8x %s\n", ssl->iv[0], ssl->iv[1], ssl->iv[2], ssl->iv[3], argv[i[0]]);
 		else
-			ft_printf("MD5 (%s) = %.8x%.8x%.8x%.8x\n", argv[i], ssl->iv[0], ssl->iv[1], ssl->iv[2], ssl->iv[3]);
+			ft_printf("MD5 (%s) = %.8x%.8x%.8x%.8x\n", argv[i[0]], ssl->iv[0], ssl->iv[1], ssl->iv[2], ssl->iv[3]);
 	}
-	else if (is_directory(argv[i]))
-		ft_printf("md5: %s: Is a directory\n", argv[i]);
+	else if (is_directory(argv[i[0]]))
+		ft_printf("md5: %s: Is a directory\n", argv[i[0]]);
 	else
-		ft_printf("ft_ssl: md5: %s: %s\n", argv[i], strerror(errno));
+		ft_printf("ft_ssl: md5: %s: %s\n", argv[i[0]], strerror(errno));
 }
 
-int		flagS(char **argv, int i, t_ssl *ssl)
+void		flagS(char **argv, int *i, t_ssl *ssl)
 {
 	int			len;
 
 	initializeIvUv(ssl);
-	if ((len = ft_strchr_i(argv[i], 's')) > 0 && argv[i][len + 1])
-		ssl->block = padding(argv[i] + (len + 1), ssl);
+	if ((len = ft_strchr_i(argv[i[0]], 's')) > 0 && argv[i[0]][len + 1])
+		ssl->block = padding(argv[i[0]] + (len + 1), ssl);
 	else
 	{
 		len = -1;
-		if (argv[i + 1])
+		if (argv[i[0] + 1])
 		{
 			i++;
-			ssl->block = padding(argv[i], ssl);
+			ssl->block = padding(argv[i[0]], ssl);
 		}
 		else
 		{
@@ -161,10 +163,10 @@ int		flagS(char **argv, int i, t_ssl *ssl)
 	if (ISSAME(*ssl->pqrs, Q))
 		ft_printf("%.8x%.8x%.8x%.8x\n", ssl->iv[0], ssl->iv[1], ssl->iv[2], ssl->iv[3]);
 	else if (ISSAME(*ssl->pqrs, R))
-		ft_printf("%.8x%.8x%.8x%.8x \"%s\"\n", ssl->iv[0], ssl->iv[1], ssl->iv[2], ssl->iv[3], argv[i] + (len + 1));
+		ft_printf("%.8x%.8x%.8x%.8x \"%s\"\n", ssl->iv[0], ssl->iv[1], ssl->iv[2], ssl->iv[3], argv[i[0]] + (len + 1));
 	else
-		ft_printf("MD5 (\"%s\") = %.8x%.8x%.8x%.8x\n", argv[i] + (len + 1), ssl->iv[0], ssl->iv[1], ssl->iv[2], ssl->iv[3]);
-	return (i);
+		ft_printf("MD5 (\"%s\") = %.8x%.8x%.8x%.8x\n", argv[i[0]] + (len + 1), ssl->iv[0], ssl->iv[1], ssl->iv[2], ssl->iv[3]);
+	i[1] = 1;
 }
 
 int				disableS(int i[1])
@@ -189,7 +191,7 @@ void			md5(int argc, char **argv)
 	i[0] = 2;
 	if (argc == 2)
 	{
-		def(ssl);
+		def(ssl, i);
 		exit (0);
 	}
 	do 
@@ -197,26 +199,18 @@ void			md5(int argc, char **argv)
 		i[0] = flags(argv, i[0], ssl);
 		if (ISSAME(*ssl->pqrs, P))
 		{
-			i[1] = disableS(i);
-			flagP(ssl);
+			flagP(ssl, i);
 			continue ;
 		}
 		else if (argv[i[0]] == NULL)
 		{
-			i[1] = disableS(i);
-			def(ssl);
+			def(ssl, i);
 			break;
 		}
 		if (((!ISSAME(*ssl->pqrs, P) && !ISSAME(*ssl->pqrs, S) && (argv[i[0]]))) || i[1] == 2)
-		{
-			i[1] = disableS(i);
-			def_with_arg(argv, i[0], ssl);
-		}
+			def_with_arg(argv, i, ssl);
 		if (ISSAME(*ssl->pqrs, S) && i[1] != 2)
-		{
-			i[0] = flags(argv, i[0], ssl);
-			i[1] = 1;
-		}
+			flagS(argv, i, ssl);
 		i[0]++;
 	} while (argv[i[0]]);
 	free (ssl->pqrs);

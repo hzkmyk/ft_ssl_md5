@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 15:13:00 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/02 17:54:01 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/03 15:37:18 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	sha256Fix(t_ssl *ssl)
 	}
 }
 
-void	sha256Def(t_ssl *ssl)
+void	sha256Def(t_ssl *ssl, int *i)
 {
 	char		buff[1024];
 	char		*input;
@@ -106,6 +106,7 @@ void	sha256Def(t_ssl *ssl)
 	char		*tmp;
 
 	sha256InVal(ssl);
+	i[1] = disableS(i[1]);
 	input = ft_strnew(0);
 	while ((readsize = read(0, buff, 1024)))
 	{
@@ -126,20 +127,21 @@ void	sha256Def(t_ssl *ssl)
 	ft_printf("%.8x%.8x%.8x%.8x%.8x%.8x%.8x%.8x\n", ssl->uv[0], ssl->uv[1], ssl->uv[2], ssl->uv[3], ssl->uv[4], ssl->uv[5], ssl->uv[6], ssl->uv[7]);
 }
 
-void	flagP256(t_ssl *ssl)
+void	flagP256(t_ssl *ssl, int *i)
 {
-	sha256Def(ssl);
+	sha256Def(ssl, i);
 	*ssl->pqrs = *ssl->pqrs & 7;
 }
 
-void	def_with_arg256(char **argv, int i, t_ssl *ssl)
+void	def_with_arg256(char **argv, int *i, t_ssl *ssl)
 {
 	char		*file;
 
 	sha256InVal(ssl);
-	if (is_file(argv[i]))
+	i[1] = disableS(i[1]);
+	if (is_file(argv[i[0]]))
 	{
-		file = save_line(argv, i);
+		file = save_line(argv, i[0]);
 		ssl->block = sha256Padding(file, ssl);
 		ssl->word = sha256Words(ssl);
 		sha256Fix(ssl);
@@ -149,30 +151,30 @@ void	def_with_arg256(char **argv, int i, t_ssl *ssl)
 		if (ISSAME(*ssl->pqrs, Q))
 			ft_printf("%.8x%.8x%.8x%.8x%.8x%.8x%.8x%.8x\n", ssl->uv[0], ssl->uv[1], ssl->uv[2], ssl->uv[3], ssl->uv[4], ssl->uv[5], ssl->uv[6], ssl->uv[7]);
 		else if (ISSAME(*ssl->pqrs, R))
-			ft_printf("%.8x%.8x%.8x%.8x%.8x%.8x%.8x%.8x %s\n", ssl->uv[0], ssl->uv[1], ssl->uv[2], ssl->uv[3], ssl->uv[4], ssl->uv[5], ssl->uv[6], ssl->uv[7], argv[i]);
+			ft_printf("%.8x%.8x%.8x%.8x%.8x%.8x%.8x%.8x %s\n", ssl->uv[0], ssl->uv[1], ssl->uv[2], ssl->uv[3], ssl->uv[4], ssl->uv[5], ssl->uv[6], ssl->uv[7], argv[i[0]]);
 		else
-			ft_printf("sha256 (%s) = %.8x%.8x%.8x%.8x%.8x%.8x%.8x%.8x\n", argv[i], ssl->uv[0], ssl->uv[1], ssl->uv[2], ssl->uv[3], ssl->uv[4], ssl->uv[5], ssl->uv[6], ssl->uv[7]);
+			ft_printf("sha256 (%s) = %.8x%.8x%.8x%.8x%.8x%.8x%.8x%.8x\n", argv[i[0]], ssl->uv[0], ssl->uv[1], ssl->uv[2], ssl->uv[3], ssl->uv[4], ssl->uv[5], ssl->uv[6], ssl->uv[7]);
 	}
-	else if (is_directory(argv[i]))
-		ft_printf("sha256: %s: Is a directory\n", argv[i]);
+	else if (is_directory(argv[i[0]]))
+		ft_printf("sha256: %s: Is a directory\n", argv[i[0]]);
 	else
-		ft_printf("ft_ssl: sha256: %s: %s\n", argv[i], strerror(errno));
+		ft_printf("ft_ssl: sha256: %s: %s\n", argv[i[0]], strerror(errno));
 }
 
-int		flagS256(char **argv, int i, t_ssl *ssl)
+void		flagS256(char **argv, int *i, t_ssl *ssl)
 {
 	int			len;
 
 	sha256InVal(ssl);
-	if ((len = ft_strchr_i(argv[i], 's')) > 0 && argv[i][len + 1])
-		ssl->block = sha256Padding(argv[i] + (len + 1), ssl);
+	if ((len = ft_strchr_i(argv[i[0]], 's')) > 0 && argv[i[0]][len + 1])
+		ssl->block = sha256Padding(argv[i[0]] + (len + 1), ssl);
 	else
 	{
 		len = -1;
-		if (argv[i + 1])
+		if (argv[i[0] + 1])
 		{
 			i++;
-			ssl->block = sha256Padding(argv[i], ssl);;
+			ssl->block = sha256Padding(argv[i[0]], ssl);;
 		}
 		else
 		{
@@ -185,10 +187,10 @@ int		flagS256(char **argv, int i, t_ssl *ssl)
 	if (ISSAME(*ssl->pqrs, Q))
 		ft_printf("%.8x%.8x%.8x%.8x%.8x%.8x%.8x%.8x\n", ssl->uv[0], ssl->uv[1], ssl->uv[2], ssl->uv[3], ssl->uv[4], ssl->uv[5], ssl->uv[6], ssl->uv[7]);
 	else if (ISSAME(*ssl->pqrs, R))
-		ft_printf("%.8x%.8x%.8x%.8x%.8x%.8x%.8x%.8x \"%s\"\n", ssl->uv[0], ssl->uv[1], ssl->uv[2], ssl->uv[3], ssl->uv[4], ssl->uv[5], ssl->uv[6], ssl->uv[7], argv[i] + (len + 1));
+		ft_printf("%.8x%.8x%.8x%.8x%.8x%.8x%.8x%.8x \"%s\"\n", ssl->uv[0], ssl->uv[1], ssl->uv[2], ssl->uv[3], ssl->uv[4], ssl->uv[5], ssl->uv[6], ssl->uv[7], argv[i[0]] + (len + 1));
 	else
-		ft_printf("sha256 (\"%s\") = %.8x%.8x%.8x%.8x%.8x%.8x%.8x%.8x\n", argv[i] + (len + 1), ssl->uv[0], ssl->uv[1], ssl->uv[2], ssl->uv[3], ssl->uv[4], ssl->uv[5], ssl->uv[6], ssl->uv[7]);
-	return (i);
+		ft_printf("sha256 (\"%s\") = %.8x%.8x%.8x%.8x%.8x%.8x%.8x%.8x\n", argv[i[0]] + (len + 1), ssl->uv[0], ssl->uv[1], ssl->uv[2], ssl->uv[3], ssl->uv[4], ssl->uv[5], ssl->uv[6], ssl->uv[7]);
+	i[1] = 1;
 }
 
 void    	sha256(int argc, char **argv)
@@ -206,7 +208,7 @@ void    	sha256(int argc, char **argv)
 	i[0] = 2;
 	if (argc == 2)
 	{
-		sha256Def(ssl);
+		sha256Def(ssl, i);
 		exit (0);
 	}
 	do 
@@ -214,26 +216,18 @@ void    	sha256(int argc, char **argv)
 		i[0] = flags(argv, i[0], ssl);
 		if (ISSAME(*ssl->pqrs, P))
 		{
-			i[1] = disableS(i);
-			flagP256(ssl);
+			flagP256(ssl, i);
 			continue ;
 		}
 		else if (argv[i[0]] == NULL)
 		{
-			i[1] = disableS(i);
-			sha256Def(ssl);
+			sha256Def(ssl, i);
 			break;
 		}
 		if (((!ISSAME(*ssl->pqrs, P) && !ISSAME(*ssl->pqrs, S) && (argv[i[0]]))) || i[1] == 2)
-		{
-			i[1] = disableS(i);
-			def_with_arg256(argv, i[0], ssl);
-		}
+			def_with_arg256(argv, i, ssl);
 		if (ISSAME(*ssl->pqrs, S) && i[1] != 2)
-		{
-			i[0] = flagS256(argv, i[0], ssl);
-			i[1] = 1;
-		}
+			flagS256(argv, i, ssl);
 		i[0]++;
 	} while (argv[i[0]]);
 	free (ssl->pqrs);
