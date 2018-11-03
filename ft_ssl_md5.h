@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/25 09:55:15 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/01 22:54:59 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/02 17:44:13 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,15 @@
 # define LEFTROTATE(rot, x) ((x << rot | x >> (32 - rot)))
 # define RIGHTROTATE(rot, x) ((x >> rot | x << (32 - rot)))
 
-typedef struct	s_initial
+typedef struct	s_ssl
 {
 	u_int32_t		iv[8];
 	u_int32_t		uv[8];
-}				t_initial;
+	int				**block;
+	u_int32_t		**word;
+	int				*pqrs;
+	int				numBlock;
+}				t_ssl;
 
 typedef void	(hash)(int, char **);
 
@@ -43,12 +47,12 @@ typedef struct	s_dsptch
 }				t_dsptch;
 
 /* padding.c */
-int			**padding(const char *argv, int *blocks);
-int		**sha256Padding(const char *argv, int *blocks);
-int			**malloc_blocks(const char *argv, int *blocks);
+int			**padding(const char *argv, t_ssl *ssl);
+int			**sha256Padding(const char *argv, t_ssl *ssl);
+int			**malloc_blocks(const char *argv, t_ssl *ssl);
 
 /* md5_words.c */
-u_int32_t	**words(int **yay, int *blocks);
+u_int32_t	**words(int **yay, int blocks);
 
 void		fix_value(u_int32_t *iv);
 
@@ -59,13 +63,13 @@ void		round_3(u_int32_t *in, const int *rot, const int *k, u_int32_t *nay);
 void		round_4(u_int32_t *in, const int *rot, const int *k, u_int32_t *nay);
 
 /* fghi.c */
-u_int32_t			f(u_int32_t *iv);
-u_int32_t			g(u_int32_t *iv);
-u_int32_t			h(u_int32_t *iv);
-u_int32_t			i(u_int32_t *iv);
+u_int32_t	f(u_int32_t *iv);
+u_int32_t	g(u_int32_t *iv);
+u_int32_t	h(u_int32_t *iv);
+u_int32_t	i(u_int32_t *iv);
 
 /* output.c */
-int			flags(char **argv, int *pqrs, int i, t_initial *in);
+int			flags(char **argv, int i, t_ssl *ssl);
 char		*save_line(char **argv, int i);
 char		*flag_s(char **argv);
 
@@ -75,17 +79,19 @@ int			is_file(char *argv);
 
 /* md5.c */
 void		md5(int argc, char **argv);
-void	flagP(int *pqrs, int **yay, u_int32_t **nay, t_initial *in);
+void		flagP(t_ssl *ssl);
 
 /* ssw.c */
 u_int32_t w(u_int32_t *nay, int i);
-u_int32_t         s2(t_initial *in);
-u_int32_t         s3(t_initial *in);
-u_int32_t         ch(t_initial *in);
-u_int32_t         maj(t_initial *in);
+u_int32_t         s2(t_ssl *ssl);
+u_int32_t         s3(t_ssl *ssl);
+u_int32_t         ch(t_ssl *ssl);
+u_int32_t         maj(t_ssl *ssl);
 
-u_int32_t	**sha256Words(int **yay, int *blocks);
+u_int32_t	**sha256Words(t_ssl *ssl);
 
 void    sha256(int argc, char **argv);
+
+int				disableS(int *i);
 
 #endif

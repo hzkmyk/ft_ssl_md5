@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/26 12:46:30 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/01 22:52:21 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/02 17:51:09 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,52 +38,50 @@ const int	k[64] = {
 	0xf7537e82, 0xbd3af235, 0x2ad7d2bb, 0xeb86d391
 };
 
-t_initial	*initializeIvUv(t_initial *in)
+void	initializeIvUv(t_ssl *ssl)
 {
-	in->iv[0] = 0x67452301;
-	in->iv[1] = 0xefcdab89;
-	in->iv[2] = 0x98badcfe;
-	in->iv[3] = 0x10325476;
-	in->uv[0] = 0x67452301;
-	in->uv[1] = 0xefcdab89;
-	in->uv[2] = 0x98badcfe;
-	in->uv[3] = 0x10325476;
-	return (in);
+	ssl->iv[0] = 0x67452301;
+	ssl->iv[1] = 0xefcdab89;
+	ssl->iv[2] = 0x98badcfe;
+	ssl->iv[3] = 0x10325476;
+	ssl->uv[0] = 0x67452301;
+	ssl->uv[1] = 0xefcdab89;
+	ssl->uv[2] = 0x98badcfe;
+	ssl->uv[3] = 0x10325476;
 }
 
-void		rounds_and_fix(int *blocks, u_int32_t **nay, t_initial *in)
+void		rounds_and_fix(t_ssl *ssl)
 {
 	int	i;
 
 	i = 0;
-	while (i < blocks[0])
+	while (i < (ssl->numBlock))
 	{
-		round_1(in->iv, rot, k, nay[i]);
-		round_2(in->iv, rot, k, nay[i]);
-		round_3(in->iv, rot, k, nay[i]);
-		round_4(in->iv, rot, k, nay[i]);
-		in->iv[0] += in->uv[0];
-		in->iv[1] += in->uv[1];
-		in->iv[2] += in->uv[2];
-		in->iv[3] += in->uv[3];
-		in->uv[0] = in->iv[0];
-		in->uv[1] = in->iv[1];
-		in->uv[2] = in->iv[2];
-		in->uv[3] = in->iv[3];
+		round_1(ssl->iv, rot, k, ssl->word[i]);
+		round_2(ssl->iv, rot, k, ssl->word[i]);
+		round_3(ssl->iv, rot, k, ssl->word[i]);
+		round_4(ssl->iv, rot, k, ssl->word[i]);
+		ssl->iv[0] += ssl->uv[0];
+		ssl->iv[1] += ssl->uv[1];
+		ssl->iv[2] += ssl->uv[2];
+		ssl->iv[3] += ssl->uv[3];
+		ssl->uv[0] = ssl->iv[0];
+		ssl->uv[1] = ssl->iv[1];
+		ssl->uv[2] = ssl->iv[2];
+		ssl->uv[3] = ssl->iv[3];
 		i++;
 	}
-	fix_value(in->iv);
+	fix_value(ssl->iv);
 }
 
-void	def(int *pqrs, int **yay, u_int32_t **nay, t_initial *in)
+void	def(t_ssl *ssl)
 {
 	char		buff[1024];
 	char		*input;
 	int			readsize;
 	char		*tmp;
-	int			blocks[1];
 
-	blocks[0] = 0;
+	initializeIvUv(ssl);
 	input = ft_strnew(0);
 	while ((readsize = read(0, buff, 1024)))
 	{
@@ -93,47 +91,43 @@ void	def(int *pqrs, int **yay, u_int32_t **nay, t_initial *in)
 		input = ft_strdup(tmp);
 		ft_strdel(&tmp);
 	}
-	if (ISSAME(*pqrs, P))
+	if (ISSAME(*ssl->pqrs, P))
 		ft_printf("%s", input);
-	yay = padding(input, blocks);
-	nay = words(yay, blocks);
-	rounds_and_fix(blocks, nay, in);
+	ssl->block = padding(input, ssl);
+	ssl->word = words(ssl->block, ssl->numBlock);
+	rounds_and_fix(ssl);
 	ft_strdel(&input);
-	ft_fdintdel(&yay);
-	ft_fduintdel(&nay);
-	ft_printf("%.8x%.8x%.8x%.8x\n", in->iv[0], in->iv[1], in->iv[2], in->iv[3]);
+	ft_fdintdel(&ssl->block);
+	ft_fduintdel(&ssl->word);
+	ft_printf("%.8x%.8x%.8x%.8x\n", ssl->iv[0], ssl->iv[1], ssl->iv[2], ssl->iv[3]);
 }
 
-
-void	flagP(int *pqrs, int **yay, u_int32_t **nay, t_initial *in)
+void	flagP(t_ssl *ssl)
 {
-	def(pqrs, yay, nay, in);
-	*pqrs = *pqrs & 7;
+	def(ssl);
+	*ssl->pqrs = *ssl->pqrs & 7;
 }
 
-void	def_with_arg(char **argv, int i, int *pqrs, t_initial *in)
+void	def_with_arg(char **argv, int i, t_ssl *ssl)
 {
-	int			**yay;
-	u_int32_t	**nay;
 	char		*file;
-	int			blocks[1];
-	
-	blocks[0] = 0;
+
+	initializeIvUv(ssl);
 	if (is_file(argv[i]))
 	{
 		file = save_line(argv, i);
-		yay = padding(file, blocks);
-		nay = words(yay, blocks);
-		rounds_and_fix(blocks, nay, in);
+		ssl->block = padding(file, ssl);
+		ssl->word = words(ssl->block, ssl->numBlock);
+		rounds_and_fix(ssl);
 		ft_strdel(&file);
-		ft_fdintdel(&yay);
-		ft_fduintdel(&nay);
-		if (ISSAME(*pqrs, Q))
-			ft_printf("%.8x%.8x%.8x%.8x\n", in->iv[0], in->iv[1], in->iv[2], in->iv[3]);
-		else if (ISSAME(*pqrs, R))
-			ft_printf("%.8x%.8x%.8x%.8x %s\n", in->iv[0], in->iv[1], in->iv[2], in->iv[3], argv[i]);
+		ft_fdintdel(&ssl->block);
+		ft_fduintdel(&ssl->word);
+		if (ISSAME(*ssl->pqrs, Q))
+			ft_printf("%.8x%.8x%.8x%.8x\n", ssl->iv[0], ssl->iv[1], ssl->iv[2], ssl->iv[3]);
+		else if (ISSAME(*ssl->pqrs, R))
+			ft_printf("%.8x%.8x%.8x%.8x %s\n", ssl->iv[0], ssl->iv[1], ssl->iv[2], ssl->iv[3], argv[i]);
 		else
-			ft_printf("MD5 (%s) = %.8x%.8x%.8x%.8x\n", argv[i], in->iv[0], in->iv[1], in->iv[2], in->iv[3]);
+			ft_printf("MD5 (%s) = %.8x%.8x%.8x%.8x\n", argv[i], ssl->iv[0], ssl->iv[1], ssl->iv[2], ssl->iv[3]);
 	}
 	else if (is_directory(argv[i]))
 		ft_printf("md5: %s: Is a directory\n", argv[i]);
@@ -141,23 +135,20 @@ void	def_with_arg(char **argv, int i, int *pqrs, t_initial *in)
 		ft_printf("ft_ssl: md5: %s: %s\n", argv[i], strerror(errno));
 }
 
-int		flagS(char **argv, int i, int *pqrs, t_initial *in)
+int		flagS(char **argv, int i, t_ssl *ssl)
 {
 	int			len;
-	int			**yay;
-	u_int32_t	**nay;
-	int			blocks[1];
-	
-	blocks[0] = 0;
+
+	initializeIvUv(ssl);
 	if ((len = ft_strchr_i(argv[i], 's')) > 0 && argv[i][len + 1])
-		yay = padding(argv[i] + (len + 1), blocks);
+		ssl->block = padding(argv[i] + (len + 1), ssl);
 	else
 	{
 		len = -1;
 		if (argv[i + 1])
 		{
 			i++;
-			yay = padding(argv[i], blocks);
+			ssl->block = padding(argv[i], ssl);
 		}
 		else
 		{
@@ -165,71 +156,68 @@ int		flagS(char **argv, int i, int *pqrs, t_initial *in)
 			exit (1);
 		}
 	}
-	nay = words(yay, blocks);
-	rounds_and_fix(blocks, nay, in);
-	if (ISSAME(*pqrs, Q))
-		ft_printf("%.8x%.8x%.8x%.8x\n", in->iv[0], in->iv[1], in->iv[2], in->iv[3]);
-	else if (ISSAME(*pqrs, R))
-		ft_printf("%.8x%.8x%.8x%.8x \"%s\"\n", in->iv[0], in->iv[1], in->iv[2], in->iv[3], argv[i] + (len + 1));
+	ssl->word = words(ssl->block, ssl->numBlock);
+	rounds_and_fix(ssl);
+	if (ISSAME(*ssl->pqrs, Q))
+		ft_printf("%.8x%.8x%.8x%.8x\n", ssl->iv[0], ssl->iv[1], ssl->iv[2], ssl->iv[3]);
+	else if (ISSAME(*ssl->pqrs, R))
+		ft_printf("%.8x%.8x%.8x%.8x \"%s\"\n", ssl->iv[0], ssl->iv[1], ssl->iv[2], ssl->iv[3], argv[i] + (len + 1));
 	else
-		ft_printf("MD5 (\"%s\") = %.8x%.8x%.8x%.8x\n", argv[i] + (len + 1), in->iv[0], in->iv[1], in->iv[2], in->iv[3]);
+		ft_printf("MD5 (\"%s\") = %.8x%.8x%.8x%.8x\n", argv[i] + (len + 1), ssl->iv[0], ssl->iv[1], ssl->iv[2], ssl->iv[3]);
 	return (i);
+}
+
+int				disableS(int i[1])
+{
+	if (i[1] == 1)
+		i[1] = 2;
+	return (i[1]);
 }
 
 void			md5(int argc, char **argv)
 {
-	int			**yay;
-	u_int32_t	**nay;
-	int			i;
-	int			*pqrs;
-	t_initial	*in;
-	int			aaa;
+	t_ssl		*ssl;
+	int			i[2];
 
-	in = (t_initial *)malloc(sizeof(t_initial));
-	initializeIvUv(in);
-	yay = NULL;
-	nay = NULL;
-	pqrs = (int *)malloc(sizeof(int));
-	*pqrs = 0;
-	aaa = 0;
-	i = 2;
+	ssl = (t_ssl *)malloc(sizeof(t_ssl));
+	ssl->block = NULL;
+	ssl->word = NULL;
+	ssl->pqrs = (int *)malloc(sizeof(int));
+	*ssl->pqrs = 0;
+	ssl->numBlock = 0;
+	i[1] = 0;
+	i[0] = 2;
 	if (argc == 2)
 	{
-		def(pqrs, yay, nay, in);
+		def(ssl);
 		exit (0);
 	}
 	do 
 	{	
-		i = flags(argv, pqrs, i, in);
-		if (ISSAME(*pqrs, P))
+		i[0] = flags(argv, i[0], ssl);
+		if (ISSAME(*ssl->pqrs, P))
 		{
-			if (aaa == 1)
-				aaa = 2;
-			initializeIvUv(in);
-			flagP(pqrs, yay, nay, in);
+			i[1] = disableS(i);
+			flagP(ssl);
 			continue ;
 		}
-		else if (argv[i] == NULL)
+		else if (argv[i[0]] == NULL)
 		{
-			if (aaa == 1)
-				aaa = 2;
-			def(pqrs, yay, nay, in);
+			i[1] = disableS(i);
+			def(ssl);
 			break;
 		}
-		if (((!ISSAME(*pqrs, P) && !ISSAME(*pqrs, S) && (argv[i]))) || aaa == 2)
+		if (((!ISSAME(*ssl->pqrs, P) && !ISSAME(*ssl->pqrs, S) && (argv[i[0]]))) || i[1] == 2)
 		{
-			if (aaa == 1)
-				aaa = 2;
-			initializeIvUv(in);
-			def_with_arg(argv, i, pqrs, in);
+			i[1] = disableS(i);
+			def_with_arg(argv, i[0], ssl);
 		}
-		if (ISSAME(*pqrs, S) && aaa != 2)
+		if (ISSAME(*ssl->pqrs, S) && i[1] != 2)
 		{
-			initializeIvUv(in);
-			i = flagS(argv, i, pqrs, in);
-			aaa = 1;
+			i[0] = flags(argv, i[0], ssl);
+			i[1] = 1;
 		}
-		i++;
-	} while (argv[i]);
-	free (pqrs);
+		i[0]++;
+	} while (argv[i[0]]);
+	free (ssl->pqrs);
 }
