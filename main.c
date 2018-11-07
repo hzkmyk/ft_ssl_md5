@@ -6,11 +6,11 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/29 12:10:15 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/01 17:11:53 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/04 18:29:52 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ssl_md5.h"
+#include "includes/ft_ssl.h"
 
 t_dsptch	dsptch_table[2] = {
 	{"md5", &md5},

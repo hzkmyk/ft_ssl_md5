@@ -6,11 +6,11 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/26 13:46:08 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/02 17:17:38 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/06 16:56:38 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ssl_md5.h"
+#include "includes/ft_ssl.h"
 
 int		**malloc_blocks(const char *argv, t_ssl *ssl)
 {
@@ -34,24 +34,20 @@ int		**malloc_blocks(const char *argv, t_ssl *ssl)
 	return (ssl->block);
 }
 
-int		**padding(const char *argv, t_ssl *ssl)
+int		**padding5(const char *argv, t_ssl *ssl)
 {
 	int	i;
 	int	j;
 	int	k;
 
 	i = 0;
-	k = 0;
+	k = -1;
 	ssl->block = malloc_blocks(argv, ssl);
 	while (i < (ssl->numBlock))
 	{
-		j = 0;
-		while (j < 64 && argv[k])
-		{
+		j = -1;
+		while (j++ < 64 && argv[++k])
 			ssl->block[i][j] = argv[k];
-			j++;
-			k++;
-		}
 		i++;
 		if (!argv[k])
 			break;
@@ -63,11 +59,10 @@ int		**padding(const char *argv, t_ssl *ssl)
 		i++;
 	j = 56;
 	ssl->block[i][j] = (int)ft_strlen(argv) * 8;
-	i = 0;
 	return (ssl->block);
 }
 
-int		**sha256Padding(const char *argv, t_ssl *ssl)
+int		**padding256(const char *argv, t_ssl *ssl)
 {
 	int	i;
 	int	j;

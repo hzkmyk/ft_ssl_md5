@@ -1,47 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   md5_words.c                                        :+:      :+:    :+:   */
+/*   words5.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 15:15:33 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/02 17:15:54 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/06 16:56:30 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ssl_md5.h"
+#include "../includes/ft_ssl.h"
 
-u_int32_t	**words(int **yay, int blocks)
+u_int32_t	**words(t_ssl *ssl)
 {
-	u_int32_t	**nay;
 	int			i;
 	int			j;
 	int			k;
 
 	j = 0;
 	k = 0;
-	nay = (u_int32_t **)malloc(sizeof(u_int32_t *) * blocks);
-	while (k < blocks)
+	ssl->word = (u_int32_t **)malloc(sizeof(u_int32_t *) * ssl->numBlock);
+	while (k < ssl->numBlock)
 	{
-		nay[k] = (u_int32_t *)malloc(sizeof(u_int32_t) * 16);
+		ssl->word[k] = (u_int32_t *)malloc(sizeof(u_int32_t) * 16);
 		k++;
 	}
 	k = 0;
-	while (k < blocks)
+	while (k < ssl->numBlock)
 	{
 		i = 0;
 		j = 0;
 		while (i < 64)
 		{
-			nay[k][j] = yay[k][i + 3] << 24;
-			nay[k][j] = nay[k][j] + (yay[k][i + 2] << 16);
-			nay[k][j] = nay[k][j] + (yay[k][i + 1] << 8);
-			nay[k][j] = nay[k][j] + yay[k][i];
+			ssl->word[k][j] = ssl->block[k][i + 3] << 24;
+			ssl->word[k][j] = ssl->word[k][j] + (ssl->block[k][i + 2] << 16);
+			ssl->word[k][j] = ssl->word[k][j] + (ssl->block[k][i + 1] << 8);
+			ssl->word[k][j] = ssl->word[k][j] + ssl->block[k][i];
 			i += 4;
 			j += 1;
 		}
 		k++;
 	}
-	return (nay);
+	return (ssl->word);
 }

@@ -6,11 +6,11 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 12:44:04 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/09/30 14:15:28 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/04 18:21:12 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ssl_md5.h"
+#include "includes/ft_ssl.h"
 
 int	is_directory(char *argv)
 {
@@ -24,6 +24,27 @@ int	is_directory(char *argv)
 	return (0);
 }
 
+char	*save_line(char **argv, int i)
+{
+	int		fd;
+	char	*tmp;
+	char	*file;
+	char	buf[21];
+	int		x;
+
+	fd = open(argv[i], O_RDONLY);
+	file = "";
+	while ((x = read(fd, buf, BUFFSIZE)))
+	{
+		buf[x] = '\0';
+		tmp = ft_strdup(buf);
+		file = ft_strjoin(file, tmp);
+		free(tmp);
+	}
+	close(fd);
+	return (file);
+}
+
 int	is_file(char *argv)
 {
 	struct stat	st;
@@ -35,25 +56,3 @@ int	is_file(char *argv)
 	}
 	return (0);
 }
-
-// int	is_symboliclink(char *argv)
-// {
-// 	struct stat	st;
-// 	char		*name;
-
-// 	name = NULL;
-// 	if (!lstat(argv, &st))
-// 	{
-// 		if (S_ISLNK(st.st_mode))
-// 		{
-// 			name = strjoin_for_path(argv, "\0", name);
-// 			if (is_file(name))
-// 				return (free_name_and_return_one(name));
-// 			else if (is_directory(name))
-// 				return (free_name_and_return_one(name) + 1);
-// 			else
-// 				return (free_name_and_return_one(name) + 2);
-// 		}
-// 	}
-// 	return (0);
-// }
