@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 12:44:04 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/04 18:21:12 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/06 23:10:20 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*save_line(char **argv, int i)
 	int		x;
 
 	fd = open(argv[i], O_RDONLY);
-	file = "";
+	file = ft_strnew(0);
 	while ((x = read(fd, buf, BUFFSIZE)))
 	{
 		buf[x] = '\0';

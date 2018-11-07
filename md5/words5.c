@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 15:15:33 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/06 16:56:30 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/06 22:02:05 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,12 @@ u_int32_t	**words(t_ssl *ssl)
 	int			k;
 
 	j = 0;
-	k = 0;
+	k = -1;
 	ssl->word = (u_int32_t **)malloc(sizeof(u_int32_t *) * ssl->numBlock);
-	while (k < ssl->numBlock)
-	{
+	while (++k < ssl->numBlock)
 		ssl->word[k] = (u_int32_t *)malloc(sizeof(u_int32_t) * 16);
-		k++;
-	}
-	k = 0;
-	while (k < ssl->numBlock)
+	k = -1;
+	while (++k < ssl->numBlock)
 	{
 		i = 0;
 		j = 0;
@@ -40,7 +37,6 @@ u_int32_t	**words(t_ssl *ssl)
 			i += 4;
 			j += 1;
 		}
-		k++;
 	}
 	return (ssl->word);
 }

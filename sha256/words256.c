@@ -6,11 +6,29 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 15:17:36 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/04 17:42:41 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/06 22:14:02 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ssl.h"
+
+u_int32_t	**words256_2(t_ssl *ssl)
+{
+	int i;
+	int k;
+	
+	k = -1;
+    while (++k < ssl->numBlock)
+    {
+        i = 16;
+        while (i < 64)
+        {
+            ssl->word[k][i] = w(ssl->word[k], i);
+            i++;
+        }
+    }
+	return (ssl->word);
+}
 
 u_int32_t	**words256(t_ssl *ssl)
 {
@@ -19,15 +37,12 @@ u_int32_t	**words256(t_ssl *ssl)
 	int			k;
 
 	j = 0;
-	k = 0;
+	k = -1;
 	ssl->word = (u_int32_t **)malloc(sizeof(u_int32_t *) * ssl->numBlock);
-	while (k < ssl->numBlock)
-	{
+	while (++k < ssl->numBlock)
 		ssl->word[k] = (u_int32_t *)malloc(sizeof(u_int32_t) * 64);
-		k++;
-	}
-	k = 0;
-	while (k < ssl->numBlock)
+	k = -1;
+	while (++k < ssl->numBlock)
 	{
 		i = 0;
 		j = 0;
@@ -40,18 +55,6 @@ u_int32_t	**words256(t_ssl *ssl)
 			i += 4;
 			j += 1;
 		}
-		k++;
 	}
-    k = 0;
-    while (k < ssl->numBlock)
-    {
-        i = 16;
-        while (i < 64)
-        {
-            ssl->word[k][i] = w(ssl->word[k], i);
-            i++;
-        }
-        k++;
-    }
-	return (ssl->word);
+	return (words256_2(ssl));
 }

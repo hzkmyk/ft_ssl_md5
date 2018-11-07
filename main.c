@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/29 12:10:15 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/04 18:29:52 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/06 22:16:58 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,7 @@ int main(int argc, char **argv)
         exit(1);
     }
     dsptch(argc, argv);
+    while (1)
+    ;
     return (0);
 }
