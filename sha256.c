@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 15:13:00 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/07 13:19:19 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/07 22:01:20 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,8 @@ void		flagS256(char **argv, int *i, t_ssl *ssl)
 			ssl->block = padding256(argv[i[0]], ssl);
 		else
 		{
-			ft_printf("sha256: option requires an argument -- s\nusage: sha256 [-pqrtx] [-s string] [files ...]\n");
+			ft_printf("sha256: option requires an argument -- s\n"
+			"usage: sha256 [-pqrtx] [-s string] [files ...]\n");
 			exit (1);
 		}
 	}
@@ -96,12 +97,7 @@ void		flagS256(char **argv, int *i, t_ssl *ssl)
 	fix256(ssl);
 	ft_fdintdel(&ssl->block, ssl);
 	ft_fduintdel(&ssl->word, ssl);
-	if (ISSAME(*ssl->pqrs, Q))
-		ft_printf("%.8x%.8x%.8x%.8x%.8x%.8x%.8x%.8x\n", ssl->uv[0], ssl->uv[1], ssl->uv[2], ssl->uv[3], ssl->uv[4], ssl->uv[5], ssl->uv[6], ssl->uv[7]);
-	else if (ISSAME(*ssl->pqrs, R))
-		ft_printf("%.8x%.8x%.8x%.8x%.8x%.8x%.8x%.8x \"%s\"\n", ssl->uv[0], ssl->uv[1], ssl->uv[2], ssl->uv[3], ssl->uv[4], ssl->uv[5], ssl->uv[6], ssl->uv[7], argv[i[0]] + (len + 1));
-	else
-		ft_printf("sha256 (\"%s\") = %.8x%.8x%.8x%.8x%.8x%.8x%.8x%.8x\n", argv[i[0]] + (len + 1), ssl->uv[0], ssl->uv[1], ssl->uv[2], ssl->uv[3], ssl->uv[4], ssl->uv[5], ssl->uv[6], ssl->uv[7]);
+	printFlagSSha256(ssl, argv, len, i);
 	i[1] = 1;
 }
 

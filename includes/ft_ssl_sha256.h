@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/04 13:09:46 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/06 21:58:13 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/07 22:12:40 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,8 @@ void		flagP256(t_ssl *ssl, int *i);
 /* value256.c */
 t_ssl   	*val256(t_ssl *ssl);
 void	    fix256(t_ssl *ssl);
+
+/* print.c */
+void        printFlagSSha256(t_ssl *ssl, char **argv, int len, int *i);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/26 12:46:30 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/07 13:19:19 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/07 22:13:33 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,6 @@ void			noArg(int argc, t_ssl *ssl, char **argv, int *i)
 		def256(ssl, i);
 		free (ssl->pqrs);
 		free(ssl);
-		while (1)
-    ;
 		exit (0);
 	}
 }
