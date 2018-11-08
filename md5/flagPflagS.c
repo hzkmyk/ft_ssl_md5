@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/04 17:57:59 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/06 23:14:38 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/07 12:34:42 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ void	flagS(char **argv, int *i, t_ssl *ssl)
 	}
 	ssl->word = words(ssl);
 	rounds_and_fix(ssl);
-	ft_fdintdel(&ssl->block);
-	ft_fduintdel(&ssl->word);
+	ft_fdintdel(&ssl->block, ssl);
+	ft_fduintdel(&ssl->word, ssl);
 	if (ISSAME(*ssl->pqrs, Q))
 		ft_printf("%.8x%.8x%.8x%.8x\n", ssl->iv[0], ssl->iv[1], ssl->iv[2], ssl->iv[3]);
 	else if (ISSAME(*ssl->pqrs, R))

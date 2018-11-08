@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/26 12:46:30 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/06 22:52:13 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/07 13:19:19 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	def(t_ssl *ssl, int *i)
 	{
 		buff[readsize] = '\0';
 		tmp = ft_strjoin(input, buff);
-		ft_strdel(&input);
 		input = ft_strdup(tmp);
 		ft_strdel(&tmp);
 	}
@@ -36,8 +35,8 @@ void	def(t_ssl *ssl, int *i)
 	ssl->word = words(ssl);
 	rounds_and_fix(ssl);
 	ft_strdel(&input);
-	ft_fdintdel(&ssl->block);
-	ft_fduintdel(&ssl->word);
+	ft_fdintdel(&ssl->block, ssl);
+	ft_fduintdel(&ssl->word, ssl);
 	ft_printf("%.8x%.8x%.8x%.8x\n", ssl->iv[0], ssl->iv[1], ssl->iv[2], ssl->iv[3]);
 }
 
@@ -54,8 +53,8 @@ void	def_with_arg(char **argv, int *i, t_ssl *ssl)
 		ssl->word = words(ssl);
 		rounds_and_fix(ssl);
 		ft_strdel(&file);
-		ft_fdintdel(&ssl->block);
-		ft_fduintdel(&ssl->word);
+		ft_fdintdel(&ssl->block, ssl);
+		ft_fduintdel(&ssl->word, ssl);
 		if (ISSAME(*ssl->pqrs, Q))
 			ft_printf("%.8x%.8x%.8x%.8x\n", ssl->iv[0], ssl->iv[1], ssl->iv[2], ssl->iv[3]);
 		else if (ISSAME(*ssl->pqrs, R))
@@ -74,13 +73,15 @@ void			noArg(int argc, t_ssl *ssl, char **argv, int *i)
 	if (argc == 2 && !ft_strcmp(argv[1], "md5"))
 	{
 		def(ssl, i);
-		while (1)
-    ;
+		free (ssl->pqrs);
+		free(ssl);
 		exit (0);
 	}
 	else if (argc == 2 && !ft_strcmp(argv[1], "sha256"))
 	{
 		def256(ssl, i);
+		free (ssl->pqrs);
+		free(ssl);
 		while (1)
     ;
 		exit (0);

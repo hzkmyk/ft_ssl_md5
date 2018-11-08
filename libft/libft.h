@@ -6,16 +6,16 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 15:00:34 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/06 22:34:48 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/07 12:32:05 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 # define BUFF_SIZE 32
-
 # include <stdlib.h>
 # include <unistd.h>
+
 
 typedef struct		s_list
 {
@@ -90,10 +90,9 @@ void    			ft_tdmemdel(void ***ap);
 int					new_line_checker(int fd, char **line, char**joyce);
 void				temp_to_joyce(int fd, char **joyce, char *buff);
 int					get_next_line(const int fd, char **line);
+void				ft_intdel(int **as);
 
-void	ft_intdel(int **as);
-void    ft_fdintdel(int ***ap);
-void    ft_fduintdel(u_int32_t ***ap);
-void	ft_uintdel(u_int32_t **as);
-void		ft_tdstrdel(char ***tdstr);
+void				ft_uintdel(u_int32_t **as);
+void				ft_tdstrdel(char ***tdstr);
+
 #endif

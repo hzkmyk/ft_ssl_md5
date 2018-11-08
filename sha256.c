@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 15:13:00 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/06 20:43:04 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/07 13:19:19 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	def256(t_ssl *ssl, int *i)
 	{
 		buff[readsize] = '\0';
 		tmp = ft_strjoin(input, buff);
-		ft_strdel(&input);
 		input = ft_strdup(tmp);
 		ft_strdel(&tmp);
 	}
@@ -36,8 +35,8 @@ void	def256(t_ssl *ssl, int *i)
 	ssl->word = words256(ssl);
 	fix256(ssl);
 	ft_strdel(&input);
-	ft_fdintdel(&ssl->block);
-	ft_fduintdel(&ssl->word);
+	ft_fdintdel(&ssl->block, ssl);
+	ft_fduintdel(&ssl->word, ssl);
 	ft_printf("%.8x%.8x%.8x%.8x%.8x%.8x%.8x%.8x\n", ssl->uv[0], ssl->uv[1], ssl->uv[2], ssl->uv[3], ssl->uv[4], ssl->uv[5], ssl->uv[6], ssl->uv[7]);
 }
 
@@ -60,8 +59,8 @@ void	def_with_arg256(char **argv, int *i, t_ssl *ssl)
 		ssl->word = words256(ssl);
 		fix256(ssl);
 		ft_strdel(&file);
-		ft_fdintdel(&ssl->block);
-		ft_fduintdel(&ssl->word);
+		ft_fdintdel(&ssl->block, ssl);
+		ft_fduintdel(&ssl->word, ssl);
 		if (ISSAME(*ssl->pqrs, Q))
 			ft_printf("%.8x%.8x%.8x%.8x%.8x%.8x%.8x%.8x\n", ssl->uv[0], ssl->uv[1], ssl->uv[2], ssl->uv[3], ssl->uv[4], ssl->uv[5], ssl->uv[6], ssl->uv[7]);
 		else if (ISSAME(*ssl->pqrs, R))
@@ -95,6 +94,8 @@ void		flagS256(char **argv, int *i, t_ssl *ssl)
 	}
 	ssl->word = words256(ssl);
 	fix256(ssl);
+	ft_fdintdel(&ssl->block, ssl);
+	ft_fduintdel(&ssl->word, ssl);
 	if (ISSAME(*ssl->pqrs, Q))
 		ft_printf("%.8x%.8x%.8x%.8x%.8x%.8x%.8x%.8x\n", ssl->uv[0], ssl->uv[1], ssl->uv[2], ssl->uv[3], ssl->uv[4], ssl->uv[5], ssl->uv[6], ssl->uv[7]);
 	else if (ISSAME(*ssl->pqrs, R))
@@ -110,7 +111,7 @@ void    	sha256(int argc, char **argv)
 	int			i[2];
     
 	ssl = inSsl(i, argc, argv);
-	do 
+	do
 	{	
 		flags(argv, i, ssl);
 		if (ISSAME(*ssl->pqrs, P))
@@ -130,4 +131,5 @@ void    	sha256(int argc, char **argv)
 		i[0]++;
 	} while (argv[i[0]]);
 	free (ssl->pqrs);
+	free(ssl);
 }
