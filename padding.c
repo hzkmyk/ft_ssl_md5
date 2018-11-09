@@ -34,6 +34,57 @@ int		**malloc_blocks(const char *argv, t_ssl *ssl)
 	return (ssl->block);
 }
 
+int		**malloc_blocks512(const char *argv, t_ssl *ssl)
+{
+	size_t	i;
+	int		j;
+
+	i = ft_strlen(argv);
+	j = 0;
+	ssl->numBlock = i / 128;
+	if (i % 128 > 111)
+		ssl->numBlock += 2;
+	else if (i % 128 < 112)
+		ssl->numBlock += 1;
+	ssl->block = (int **)malloc(sizeof(int *) * ssl->numBlock);
+	while (j < (ssl->numBlock))
+	{
+		ssl->block[j] = (int *)malloc(sizeof(int) * 128);
+		ft_bzero(ssl->block[j], 128);
+		j++;
+	}
+	return (ssl->block);
+}
+
+int		**padding512(const char *argv, t_ssl *ssl)
+{
+	int	i;
+	int	j;
+	int	k;
+
+	i = 0;
+	k = 0;
+	ssl->block = malloc_blocks512(argv, ssl);
+	while (i < (ssl->numBlock))
+	{
+		j = 0;
+		while (j < 128 && argv[k])
+		{
+			ssl->block[i][j] = argv[k];
+			j++;
+			k++;
+		}
+		i++;
+		if (!argv[k])
+			break;
+	}
+	i -= 1;
+	ssl->block[i][j] = 256;
+	j = 79;
+	ssl->block[i][j] = (int)ft_strlen(argv) * 8;
+	return (ssl->block);
+}
+
 int		**padding5(const char *argv, t_ssl *ssl)
 {
 	int	i;
