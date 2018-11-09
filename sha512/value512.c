@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 17:11:26 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/08 19:39:43 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/09 14:59:10 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ void                fix512(t_ssl *ssl)
 		j = 0;
 		while (j < 80)
 		{
-			printf("i is %d, j is %d\n",i,j);
 			tmp[0] = ssl->iv512[7] + s2_512(ssl) + ch512(ssl) + k512[j] + ssl->word512[i][j];
 			tmp[1] = s3_512(ssl) + maj512(ssl);
 			ssl->iv512[7] = ssl->iv512[6];
