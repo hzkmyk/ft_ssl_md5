@@ -6,15 +6,16 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/29 12:10:15 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/07 22:13:26 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/08 18:33:00 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/ft_ssl.h"
 
-t_dsptch	dsptch_table[2] = {
+t_dsptch	dsptch_table[3] = {
 	{"md5", &md5},
 	{"sha256", &sha256},
+    {"sha512", &sha512},
 };
 
 void dsptch(int argc, char **argv)
@@ -22,7 +23,7 @@ void dsptch(int argc, char **argv)
     int i;
 
     i = 0;
-    while (i < 2)
+    while (i < 3)
     {
         if (ft_strequ(argv[1], dsptch_table[i].name))
         {

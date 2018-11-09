@@ -6,13 +6,13 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/04 18:08:26 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/04 18:45:54 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/08 17:56:47 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ssl.h"
 
-const int	sha256K[64] = {
+const u_int32_t	sha256K[64] = {
 	0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5,
 	0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
 	0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3,

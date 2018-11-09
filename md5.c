@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/26 12:46:30 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/07 22:13:33 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/08 18:12:45 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,13 @@ void			noArg(int argc, t_ssl *ssl, char **argv, int *i)
 	else if (argc == 2 && !ft_strcmp(argv[1], "sha256"))
 	{
 		def256(ssl, i);
+		free (ssl->pqrs);
+		free(ssl);
+		exit (0);
+	}
+	else if (argc == 2 && !ft_strcmp(argv[1], "sha512"))
+	{
+		def512(ssl, i);
 		free (ssl->pqrs);
 		free(ssl);
 		exit (0);

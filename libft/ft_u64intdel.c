@@ -1,33 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_fduintdel.c                                     :+:      :+:    :+:   */
+/*   ft_u64intdel.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/06 21:59:06 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/08 19:42:55 by hmiyake          ###   ########.fr       */
+/*   Created: 2018/11/08 19:43:49 by hmiyake           #+#    #+#             */
+/*   Updated: 2018/11/08 19:44:07 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "../includes/ft_ssl.h"
 
-void    ft_fduintdel(u_int32_t ***ap, t_ssl *ssl)
+void	ft_u64intdel(u_int64_t **as)
 {
-    int i;
-    u_int32_t **tmp;
-
-    i = 0;
-    tmp = *ap;
-    if (tmp && *tmp)
-    {
-         while(i < ssl->numBlock)
-        {
-            ft_uintdel(&tmp[i]);
-            i++;
-        }
-        free(tmp);
-        tmp = NULL;
-    }
+	if (as && *as)
+	{
+		free(*as);
+		*as = NULL;
+	}
 }
