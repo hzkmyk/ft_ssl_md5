@@ -71,6 +71,10 @@ t_ssl				*inSsl(int *i, int argc, char **argv);
 /* sha256.c */
 void    			sha256(int argc, char **argv);
 
+/* sha512.c */
+void    			sha512(int argc, char **argv);
+
+/* libft func */
 void    			ft_fdintdel(int ***ap, t_ssl *ssl);
 void    			ft_fduintdel(u_int32_t ***ap, t_ssl *ssl);
 #endif
