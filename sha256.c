@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 15:13:00 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/07 22:01:20 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/09 18:04:11 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	def256(t_ssl *ssl, int *i)
 	char		*tmp;
 
 	val256(ssl);
-	i[1] = disableS(i[1]);
+	i[1] = disable_s(i[1]);
 	input = ft_strnew(0);
 	while ((readsize = read(0, buff, 1024)))
 	{
@@ -40,7 +40,7 @@ void	def256(t_ssl *ssl, int *i)
 	ft_printf("%.8x%.8x%.8x%.8x%.8x%.8x%.8x%.8x\n", ssl->uv[0], ssl->uv[1], ssl->uv[2], ssl->uv[3], ssl->uv[4], ssl->uv[5], ssl->uv[6], ssl->uv[7]);
 }
 
-void	flagP256(t_ssl *ssl, int *i)
+void	flag_p256(t_ssl *ssl, int *i)
 {
 	def256(ssl, i);
 	*ssl->pqrs = *ssl->pqrs & 7;
@@ -51,7 +51,7 @@ void	def_with_arg256(char **argv, int *i, t_ssl *ssl)
 	char		*file;
 
 	val256(ssl);
-	i[1] = disableS(i[1]);
+	i[1] = disable_s(i[1]);
 	if (is_file(argv[i[0]]))
 	{
 		file = save_line(argv, i[0]);
@@ -74,7 +74,7 @@ void	def_with_arg256(char **argv, int *i, t_ssl *ssl)
 		ft_printf("ft_ssl: sha256: %s: %s\n", argv[i[0]], strerror(errno));
 }
 
-void		flagS256(char **argv, int *i, t_ssl *ssl)
+void		flag_s256(char **argv, int *i, t_ssl *ssl)
 {
 	int			len;
 
@@ -97,7 +97,7 @@ void		flagS256(char **argv, int *i, t_ssl *ssl)
 	fix256(ssl);
 	ft_fdintdel(&ssl->block, ssl);
 	ft_fduintdel(&ssl->word, ssl);
-	printFlagSSha256(ssl, argv, len, i);
+	printflags256(ssl, argv, len, i);
 	i[1] = 1;
 }
 
@@ -106,13 +106,13 @@ void    	sha256(int argc, char **argv)
     t_ssl		*ssl;
 	int			i[2];
     
-	ssl = inSsl(i, argc, argv);
+	ssl = inssl(i, argc, argv);
 	do
 	{	
 		flags(argv, i, ssl);
 		if (ISSAME(*ssl->pqrs, P))
 		{
-			flagP256(ssl, i);
+			flag_p256(ssl, i);
 			continue ;
 		}
 		else if (argv[i[0]] == NULL)
@@ -123,7 +123,7 @@ void    	sha256(int argc, char **argv)
 		if (((!ISSAME(*ssl->pqrs, P) && !ISSAME(*ssl->pqrs, S) && (argv[i[0]]))) || i[1] == 2)
 			def_with_arg256(argv, i, ssl);
 		if (ISSAME(*ssl->pqrs, S) && i[1] != 2)
-			flagS256(argv, i, ssl);
+			flag_s256(argv, i, ssl);
 		i[0]++;
 	} while (argv[i[0]]);
 	free (ssl->pqrs);

@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 21:22:27 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/04 17:40:19 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/09 17:16:06 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int			little_endian(int iv)
 	tmp[2] = (iv & 0x0000FF00) << 8;
 	tmp[3] = (iv & 0x000000FF) << 24;
 	tmp[0] = tmp[0] + tmp[1] + tmp[2] + tmp[3];
-	return (tmp[0]); 
+	return (tmp[0]);
 }
 
 void		fix_value(u_int32_t *iv)

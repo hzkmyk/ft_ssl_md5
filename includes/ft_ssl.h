@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/04 13:05:40 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/09 16:38:18 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/09 18:14:49 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ typedef struct		s_dsptch
 }					t_dsptch;
 
 /* flagPflagS.c */
-int					disableS(int i);
+int					disable_s(int i);
 
 /* padding.c */
 int					**padding5(const char *argv, t_ssl *ssl);
@@ -74,7 +74,7 @@ int					is_file(char *argv);
 
 /* md5.c */
 void				md5(int argc, char **argv);
-t_ssl				*inSsl(int *i, int argc, char **argv);
+t_ssl				*inssl(int *i, int argc, char **argv);
 
 /* sha256.c */
 void    			sha256(int argc, char **argv);

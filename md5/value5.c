@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 21:48:48 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/04 17:41:57 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/09 17:13:53 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	switch_iv(u_int32_t *iv)
 	iv[0] = tmp3;
 }
 
-void	initializeIvUv(t_ssl *ssl)
+void	initialize_ivuv(t_ssl *ssl)
 {
 	ssl->iv[0] = 0x67452301;
 	ssl->iv[1] = 0xefcdab89;

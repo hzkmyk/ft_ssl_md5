@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/26 12:46:30 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/09 16:11:42 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/09 17:30:39 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	def(t_ssl *ssl, int *i)
 	int			readsize;
 	char		*tmp;
 
-	initializeIvUv(ssl);
-	i[1] = disableS(i[1]);
+	initialize_ivuv(ssl);
+	i[1] = disable_s(i[1]);
 	input = ft_strnew(0);
 	while ((readsize = read(0, buff, 1024)))
 	{
@@ -44,8 +44,8 @@ void	def_with_arg(char **argv, int *i, t_ssl *ssl)
 {
 	char		*file;
 
-	initializeIvUv(ssl);
-	i[1] = disableS(i[1]);
+	initialize_ivuv(ssl);
+	i[1] = disable_s(i[1]);
 	if (is_file(argv[i[0]]))
 	{
 		file = save_line(argv, i[0]);
@@ -68,7 +68,7 @@ void	def_with_arg(char **argv, int *i, t_ssl *ssl)
 		ft_printf("ft_ssl: md5: %s: %s\n", argv[i[0]], strerror(errno));
 }
 
-void			noArg(int argc, t_ssl *ssl, char **argv, int *i)
+void			noarg(int argc, t_ssl *ssl, char **argv, int *i)
 {
 	if (argc == 2 && !ft_strcmp(argv[1], "md5"))
 	{
@@ -92,7 +92,7 @@ void			noArg(int argc, t_ssl *ssl, char **argv, int *i)
 	}
 }
 
-t_ssl			*inSsl(int *i, int argc, char **argv)
+t_ssl			*inssl(int *i, int argc, char **argv)
 {
 	t_ssl *ssl;
 
@@ -104,7 +104,7 @@ t_ssl			*inSsl(int *i, int argc, char **argv)
 	ssl->numBlock = 0;
 	i[1] = 0;
 	i[0] = 2;
-	noArg(argc, ssl, argv, i);
+	noarg(argc, ssl, argv, i);
 	return (ssl);
 }
 
@@ -113,13 +113,13 @@ void			md5(int argc, char **argv)
 	t_ssl		*ssl;
 	int			i[2];
 
-	ssl = inSsl(i, argc, argv);
+	ssl = inssl(i, argc, argv);
 	do 
 	{	
 		flags(argv, i, ssl);
 		if (ISSAME(*ssl->pqrs, P))
 		{
-			flagP(ssl, i);
+			flag_p(ssl, i);
 			continue;
 		}
 		else if (argv[i[0]] == NULL)
@@ -130,7 +130,7 @@ void			md5(int argc, char **argv)
 		if (((!ISSAME(*ssl->pqrs, P) && !ISSAME(*ssl->pqrs, S) && (argv[i[0]]))) || i[1] == 2)
 			def_with_arg(argv, i, ssl);
 		if (ISSAME(*ssl->pqrs, S) && i[1] != 2)
-			flagS(argv, i, ssl);
+			flag_s(argv, i, ssl);
 		i[0]++;
 	} while (argv[i[0]]);
 	free (ssl->pqrs);

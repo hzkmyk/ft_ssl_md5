@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/29 11:25:26 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/06 20:35:43 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/09 18:01:25 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ void	exitInvalid(int test, char **argv, int i, t_ssl *ssl)
 	else if (*ssl->pqrs >= 8 && (c = invalid(argv[i], ft_strlen(argv[i]))))
 	{
 		if (ft_strcmp(argv[1], "md5"))
-			flagP(ssl, &i);
+			flag_p(ssl, &i);
 		else
-			flagP256(ssl, &i);
+			flag_p256(ssl, &i);
 		ft_printf("md5: illegal option -- %c\nusage: md5 [-pqr] [-s string] [files ...]\n", c);
 		exit (1);
 	}

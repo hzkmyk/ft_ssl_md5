@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/09 16:36:50 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/09 16:45:05 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/09 18:14:26 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 void	def384(t_ssl *ssl, int *i);
 
 /* print.c */
-void    printFlagSsha384(t_ssl *ssl, char **argv, int len, int *i);
+void    printflags384(t_ssl *ssl, char **argv, int len, int *i);
 
 /* value512.c */
 t_ssl   *val384(t_ssl *ssl);

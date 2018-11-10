@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/09 15:33:36 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/09 16:37:38 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/09 18:16:14 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	def384(t_ssl *ssl, int *i)
 	char		*tmp;
 
 	val384(ssl);
-	i[1] = disableS(i[1]);
+	i[1] = disable_s(i[1]);
 	input = ft_strnew(0);
 	while ((readsize = read(0, buff, 1024)))
 	{
@@ -40,7 +40,7 @@ void	def384(t_ssl *ssl, int *i)
 	ft_printf("%.16llx%.16llx%.16llx%.16llx%.16llx%.16llx\n", ssl->uv512[0], ssl->uv512[1], ssl->uv512[2], ssl->uv512[3], ssl->uv512[4], ssl->uv512[5]);
 }
 
-void	flagP384(t_ssl *ssl, int *i)
+void	flag_p384(t_ssl *ssl, int *i)
 {
 	def384(ssl, i);
 	*ssl->pqrs = *ssl->pqrs & 7;
@@ -51,7 +51,7 @@ void	def_with_arg384(char **argv, int *i, t_ssl *ssl)
 	char		*file;
 
 	val384(ssl);
-	i[1] = disableS(i[1]);
+	i[1] = disable_s(i[1]);
 	if (is_file(argv[i[0]]))
 	{
 		file = save_line(argv, i[0]);
@@ -74,7 +74,7 @@ void	def_with_arg384(char **argv, int *i, t_ssl *ssl)
 		ft_printf("ft_ssl: sha384: %s: %s\n", argv[i[0]], strerror(errno));
 }
 
-void		flagS384(char **argv, int *i, t_ssl *ssl)
+void		flag_s384(char **argv, int *i, t_ssl *ssl)
 {
 	int			len;
 
@@ -97,7 +97,7 @@ void		flagS384(char **argv, int *i, t_ssl *ssl)
 	fix512(ssl);
 	ft_fdu64intdel(&ssl->block512, ssl);
 	ft_fdu64intdel(&ssl->word512, ssl);
-	printFlagSsha384(ssl, argv, len, i);
+	printflags384(ssl, argv, len, i);
 	i[1] = 1;
 }
 
@@ -106,13 +106,13 @@ void    sha384(int argc, char **argv)
     t_ssl   *ssl;
     int     i[2];
 
-    ssl = inSsl(i, argc, argv);
+    ssl = inssl(i, argc, argv);
     do
     {
         flags(argv, i, ssl);
         if (ISSAME(*ssl->pqrs, P))
 		{
-			flagP384(ssl, i);
+			flag_p384(ssl, i);
 			continue ;
 		}
 		else if (argv[i[0]] == NULL)
@@ -123,7 +123,7 @@ void    sha384(int argc, char **argv)
 		if (((!ISSAME(*ssl->pqrs, P) && !ISSAME(*ssl->pqrs, S) && (argv[i[0]]))) || i[1] == 2)
 			def_with_arg384(argv, i, ssl);
 		if (ISSAME(*ssl->pqrs, S) && i[1] != 2)
-			flagS384(argv, i, ssl);
+			flag_s384(argv, i, ssl);
 		i[0]++;
     } while (argv[i[0]]);
 }

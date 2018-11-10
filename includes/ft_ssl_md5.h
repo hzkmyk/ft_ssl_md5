@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/25 09:55:15 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/06 21:58:10 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/09 18:00:10 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,19 @@ u_int32_t	h(u_int32_t *iv);
 u_int32_t	i(u_int32_t *iv);
 
 /* flagPflagS.c */
-void		flagP(t_ssl *ssl, int *i);
-void        flagS(char **argv, int *i, t_ssl *ssl);
+void		flag_p(t_ssl *ssl, int *i);
+void        flag_s(char **argv, int *i, t_ssl *ssl);
 
 /* value5.c */
-void	    initializeIvUv(t_ssl *ssl);
+void	    initialize_ivuv(t_ssl *ssl);
 
 /* hash5.c */
 void		rounds_and_fix(t_ssl *ssl);
 
 void	    def(t_ssl *ssl, int *i);
 void	    switch_iv(u_int32_t *iv);
+
+/* print.c */
+void        printflags5(t_ssl *ssl, char **argv, int len, int *i);
 
 #endif

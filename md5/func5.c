@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 16:57:50 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/04 17:41:36 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/09 17:15:49 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ u_int32_t	f(u_int32_t *iv)
 
 u_int32_t	g(u_int32_t *iv)
 {
-	return ((iv[1] & iv[3]) | (iv[2] & ~ iv[3]));
+	return ((iv[1] & iv[3]) | (iv[2] & ~iv[3]));
 }
 
 u_int32_t	h(u_int32_t *iv)
