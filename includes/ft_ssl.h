@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/04 13:05:40 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/08 23:29:46 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/09 16:38:18 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct		s_ssl
 # include "ft_ssl_md5.h"
 # include "ft_ssl_sha256.h"
 # include "ft_ssl_sha512.h"
+# include "ft_ssl_sha384.h"
 
 typedef void	(hash)(int, char **);
 typedef struct		s_dsptch
@@ -80,6 +81,10 @@ void    			sha256(int argc, char **argv);
 
 /* sha512.c */
 void    			sha512(int argc, char **argv);
+
+
+/* sha384.c */
+void    			sha384(int argc, char **argv);
 
 /* libft func */
 void    			ft_fdintdel(int ***ap, t_ssl *ssl);
