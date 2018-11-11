@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/25 09:55:15 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/09 18:00:10 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/10 19:46:36 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,34 +14,51 @@
 # define FT_SSL_MD5_H
 # include "ft_ssl.h"
 
-/* words5.c */
+/*
+** words5.c
+*/
 u_int32_t	**words(t_ssl *ssl);
 
-void		fix_value(u_int32_t *iv);
-
-/* rounds5.c */
+/*
+** rounds5.c
+*/
 void		rounds(u_int32_t *in, const int *rot, const int *k, u_int32_t *nay);
 
-/* func5.c */
+/*
+** func5.c
+*/
 u_int32_t	f(u_int32_t *iv);
-u_int32_t   g(u_int32_t *iv);
+u_int32_t	g(u_int32_t *iv);
 u_int32_t	h(u_int32_t *iv);
 u_int32_t	i(u_int32_t *iv);
 
-/* flagPflagS.c */
+/*
+** flagPflagS.c
+*/
 void		flag_p(t_ssl *ssl, int *i);
-void        flag_s(char **argv, int *i, t_ssl *ssl);
+void		flag_s(char **argv, int *i, t_ssl *ssl);
 
-/* value5.c */
-void	    initialize_ivuv(t_ssl *ssl);
+/*
+** value5.c
+*/
+void		initialize_ivuv(t_ssl *ssl);
+void		fix_value(u_int32_t *iv);
+void		switch_iv(u_int32_t *iv);
 
-/* hash5.c */
+/*
+** hash5.c
+*/
 void		rounds_and_fix(t_ssl *ssl);
 
-void	    def(t_ssl *ssl, int *i);
-void	    switch_iv(u_int32_t *iv);
+/*
+** md5.h
+*/
+void		def(t_ssl *ssl, int *i);
 
-/* print.c */
-void        printflags5(t_ssl *ssl, char **argv, int len, int *i);
+/*
+** print.c
+*/
+void		printflags5(t_ssl *ssl, char **argv, int len, int *i);
+void		printdefwitharg(t_ssl *ssl, char **argv, int *i);
 
 #endif

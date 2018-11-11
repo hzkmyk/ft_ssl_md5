@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/29 11:25:26 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/09 18:01:25 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/10 19:45:11 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,46 +15,48 @@
 char	invalid(char *argv, int len)
 {
 	int i;
-	
+
 	i = 1;
 	while (i < len)
 	{
-		if (argv[i] != 'p' && argv[i] != 'q' && argv[i] != 'r' && argv[i] != 's')
+		if (argv[i] != 'p' && argv[i] != 'q'
+		&& argv[i] != 'r' && argv[i] != 's')
 			return (argv[i]);
 		i++;
 	}
 	return (0);
 }
 
-void	exitInvalid(int test, char **argv, int i, t_ssl *ssl)
+void	warning(char c)
+{
+	ft_printf("md5: illegal option -- %c\nusage:"
+		" md5 [-pqr] [-s string] [files ...]\n", c);
+	exit(1);
+}
+
+void	exitinvalid(int test, char **argv, int i, t_ssl *ssl)
 {
 	char c;
-	
+
 	if (((test = ft_strchr_i(argv[i], 'p')) > 0))
 	{
 		if ((c = invalid(argv[i], test)))
-		{
-			ft_printf("md5: illegal option -- %c\nusage: md5 [-pqr] [-s string] [files ...]\n", c);
-			exit (1);
-		}
+			warning(c);
 	}
-	if (*ssl->pqrs < 8 && (c = invalid(argv[i], ft_strlen(argv[i]))))
-	{
-		ft_printf("md5: illegal option -- %c\nusage: md5 [-pqr] [-s string] [files ...]\n", c);
-		exit (1);
-	}
+	if (*ssl->pqrs < 8
+	&& (c = invalid(argv[i], ft_strlen(argv[i]))))
+		warning(c);
 	else if (*ssl->pqrs >= 8 && (c = invalid(argv[i], ft_strlen(argv[i]))))
 	{
 		if (ft_strcmp(argv[1], "md5"))
 			flag_p(ssl, &i);
 		else
 			flag_p256(ssl, &i);
-		ft_printf("md5: illegal option -- %c\nusage: md5 [-pqr] [-s string] [files ...]\n", c);
-		exit (1);
+		warning(c);
 	}
 }
 
-void		flags(char **argv, int *i, t_ssl *ssl)
+void	flags(char **argv, int *i, t_ssl *ssl)
 {
 	int len;
 	int test;
@@ -73,11 +75,11 @@ void		flags(char **argv, int *i, t_ssl *ssl)
 			*ssl->pqrs |= ft_strnstr(argv[i[0]], "q", len) ? Q : 0;
 			*ssl->pqrs |= ft_strnstr(argv[i[0]], "r", len) ? R : 0;
 			if (ISSAME(*ssl->pqrs, S))
-				break;
-			exitInvalid(test, argv, i[0], ssl);
+				break ;
+			exitinvalid(test, argv, i[0], ssl);
 		}
 		else
-			break;
+			break ;
 		i[0]++;
 	}
 }

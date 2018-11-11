@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/04 13:05:40 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/09 18:14:49 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/10 17:30:41 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,13 @@ typedef struct		s_ssl
 typedef void	(hash)(int, char **);
 typedef struct		s_dsptch
 {
-	char    		*name;
-	hash    		*hash;
+	char			*name;
+	hash			*hash;
 }					t_dsptch;
 
-/* flagPflagS.c */
+/*
+** flagPflagS.c
+*/
 int					disable_s(int i);
 
 /* padding.c */
@@ -77,17 +79,17 @@ void				md5(int argc, char **argv);
 t_ssl				*inssl(int *i, int argc, char **argv);
 
 /* sha256.c */
-void    			sha256(int argc, char **argv);
+void				sha256(int argc, char **argv);
 
 /* sha512.c */
-void    			sha512(int argc, char **argv);
+void				sha512(int argc, char **argv);
 
 
 /* sha384.c */
-void    			sha384(int argc, char **argv);
+void				sha384(int argc, char **argv);
 
 /* libft func */
-void    			ft_fdintdel(int ***ap, t_ssl *ssl);
-void    			ft_fduintdel(u_int32_t ***ap, t_ssl *ssl);
-void    			ft_fdu64intdel(u_int64_t ***ap, t_ssl *ssl);
+void				ft_fdintdel(int ***ap, t_ssl *ssl);
+void				ft_fduintdel(u_int32_t ***ap, t_ssl *ssl);
+void				ft_fdu64intdel(u_int64_t ***ap, t_ssl *ssl);
 #endif

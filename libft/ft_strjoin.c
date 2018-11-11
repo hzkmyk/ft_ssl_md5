@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/29 19:25:46 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/06 22:39:05 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/10 17:58:48 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ char	*ft_strjoin(char *s1, char const *s2)
 		}
 		str[i + o] = '\0';
 		free(s1);
-		return (str);
 	}
-	return (0);
+	return (str);
 }

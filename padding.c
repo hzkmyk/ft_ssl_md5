@@ -6,13 +6,13 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/26 13:46:08 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/08 23:29:25 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/10 17:33:40 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/ft_ssl.h"
 
-int		**malloc_blocks(const char *argv, t_ssl *ssl)
+int			**malloc_blocks(const char *argv, t_ssl *ssl)
 {
 	size_t	i;
 	int		j;
@@ -34,7 +34,7 @@ int		**malloc_blocks(const char *argv, t_ssl *ssl)
 	return (ssl->block);
 }
 
-u_int64_t		**malloc_blocks512(const char *argv, t_ssl *ssl)
+u_int64_t	**malloc_blocks512(const char *argv, t_ssl *ssl)
 {
 	size_t	i;
 	int		j;
@@ -56,7 +56,7 @@ u_int64_t		**malloc_blocks512(const char *argv, t_ssl *ssl)
 	return (ssl->block512);
 }
 
-u_int64_t		**padding512(const char *argv, t_ssl *ssl)
+u_int64_t	**padding512(const char *argv, t_ssl *ssl)
 {
 	int	i;
 	int	j;
@@ -85,7 +85,7 @@ u_int64_t		**padding512(const char *argv, t_ssl *ssl)
 	return (ssl->block512);
 }
 
-int		**padding256(const char *argv, t_ssl *ssl)
+int			**padding256(const char *argv, t_ssl *ssl)
 {
 	int	i;
 	int	j;
@@ -114,7 +114,7 @@ int		**padding256(const char *argv, t_ssl *ssl)
 	return (ssl->block);
 }
 
-int		**padding5(const char *argv, t_ssl *ssl)
+int			**padding5(const char *argv, t_ssl *ssl)
 {
 	int	i;
 	int	j;

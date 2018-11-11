@@ -6,13 +6,13 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 12:44:04 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/06 23:10:20 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/10 19:19:36 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/ft_ssl.h"
 
-int	is_directory(char *argv)
+int		is_directory(char *argv)
 {
 	struct stat	st;
 
@@ -45,7 +45,7 @@ char	*save_line(char **argv, int i)
 	return (file);
 }
 
-int	is_file(char *argv)
+int		is_file(char *argv)
 {
 	struct stat	st;
 

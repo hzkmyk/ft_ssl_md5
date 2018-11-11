@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/04 13:09:46 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/09 18:14:04 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/10 17:29:38 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,35 @@
 # define FT_SSL_SHA256_H
 # include "ft_ssl.h"
 
-/* func256.c */
-u_int32_t   w(u_int32_t *nay, int i);
+/*
+** func256.c
+*/
+u_int32_t	w(u_int32_t *nay, int i);
 u_int32_t	s2(t_ssl *ssl);
 u_int32_t	s3(t_ssl *ssl);
-u_int32_t 	ch(t_ssl *ssl);
+u_int32_t	ch(t_ssl *ssl);
 u_int32_t	maj(t_ssl *ssl);
 
-/* words256.c */
+/*
+** words256.c
+*/
 u_int32_t	**words256(t_ssl *ssl);
 
-/* sha256.c */
-void	    def256(t_ssl *ssl, int *i);
+/*
+** sha256.c
+*/
+void		def256(t_ssl *ssl, int *i);
 void		flag_p256(t_ssl *ssl, int *i);
 
-/* value256.c */
-t_ssl   	*val256(t_ssl *ssl);
-void	    fix256(t_ssl *ssl);
+/*
+** value256.c
+*/
+t_ssl		*val256(t_ssl *ssl);
+void		fix256(t_ssl *ssl);
 
-/* print.c */
-void        printflags256(t_ssl *ssl, char **argv, int len, int *i);
+/*
+** print.c
+*/
+void		printflags256(t_ssl *ssl, char **argv, int len, int *i);
 
 #endif

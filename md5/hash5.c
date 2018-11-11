@@ -6,20 +6,20 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/04 17:31:16 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/09 17:38:01 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/10 18:54:40 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ssl.h"
 
-const int	rot[64] = {
+const int	g_rot[64] = {
 	7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22,
 	5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20,
 	4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23,
 	6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21
 };
 
-const int	k[64] = {
+const int	g_k[64] = {
 	0xd76aa478, 0xe8c7b756, 0x242070db, 0xc1bdceee,
 	0xf57c0faf, 0x4787c62a, 0xa8304613, 0xfd469501,
 	0x698098d8, 0x8b44f7af, 0xffff5bb1, 0x895cd7be,
@@ -38,7 +38,8 @@ const int	k[64] = {
 	0xf7537e82, 0xbd3af235, 0x2ad7d2bb, 0xeb86d391
 };
 
-void		round_4(u_int32_t *iv, const int *rot, const int *k, u_int32_t *nay)
+void		round_4(u_int32_t *iv, const int *g_rot,
+const int *g_k, u_int32_t *nay)
 {
 	int			j;
 	u_int32_t	tmp;
@@ -46,15 +47,16 @@ void		round_4(u_int32_t *iv, const int *rot, const int *k, u_int32_t *nay)
 	j = 48;
 	while (j < 64)
 	{
-		tmp = iv[0] + i(iv) + nay[(j * 7) % 16] + k[j];
-		tmp = LEFTROTATE(rot[j], tmp);
+		tmp = iv[0] + i(iv) + nay[(j * 7) % 16] + g_k[j];
+		tmp = LEFTROTATE(g_rot[j], tmp);
 		iv[0] = (iv[1] + tmp);
 		switch_iv(iv);
 		j++;
 	}
 }
 
-void		round_3(u_int32_t *iv, const int *rot, const int *k, u_int32_t *nay)
+void		round_3(u_int32_t *iv, const int *g_rot,
+const int *g_k, u_int32_t *nay)
 {
 	int			i;
 	u_int32_t	tmp;
@@ -62,15 +64,16 @@ void		round_3(u_int32_t *iv, const int *rot, const int *k, u_int32_t *nay)
 	i = 32;
 	while (i < 48)
 	{
-		tmp = iv[0] + h(iv) + nay[((i * 3) + 5) % 16] + k[i];
-		tmp = LEFTROTATE(rot[i], tmp);
+		tmp = iv[0] + h(iv) + nay[((i * 3) + 5) % 16] + g_k[i];
+		tmp = LEFTROTATE(g_rot[i], tmp);
 		iv[0] = (iv[1] + tmp);
 		switch_iv(iv);
 		i++;
 	}
 }
 
-void		round_2(u_int32_t *iv, const int *rot, const int *k, u_int32_t *nay)
+void		round_2(u_int32_t *iv, const int *g_rot,
+const int *g_k, u_int32_t *nay)
 {
 	int			i;
 	u_int32_t	tmp;
@@ -78,15 +81,16 @@ void		round_2(u_int32_t *iv, const int *rot, const int *k, u_int32_t *nay)
 	i = 16;
 	while (i < 32)
 	{
-		tmp = iv[0] + g(iv) + nay[((i * 5) + 1) % 16] + k[i];
-		tmp = LEFTROTATE(rot[i], tmp);
+		tmp = iv[0] + g(iv) + nay[((i * 5) + 1) % 16] + g_k[i];
+		tmp = LEFTROTATE(g_rot[i], tmp);
 		iv[0] = (iv[1] + tmp);
 		switch_iv(iv);
 		i++;
 	}
 }
 
-void		rounds(u_int32_t *iv, const int *rot, const int *k, u_int32_t *nay)
+void		rounds(u_int32_t *iv, const int *g_rot,
+const int *g_k, u_int32_t *nay)
 {
 	int			i;
 	u_int32_t	tmp;
@@ -94,15 +98,15 @@ void		rounds(u_int32_t *iv, const int *rot, const int *k, u_int32_t *nay)
 	i = 0;
 	while (i < 16)
 	{
-		tmp = iv[0] + f(iv) + nay[i] + k[i];
-		tmp = LEFTROTATE(rot[i], tmp);
+		tmp = iv[0] + f(iv) + nay[i] + g_k[i];
+		tmp = LEFTROTATE(g_rot[i], tmp);
 		iv[0] = (iv[1] + tmp);
 		switch_iv(iv);
 		i++;
 	}
-	round_2(iv, rot, k, nay);
-	round_3(iv, rot, k, nay);
-	round_4(iv, rot, k, nay);
+	round_2(iv, g_rot, g_k, nay);
+	round_3(iv, g_rot, g_k, nay);
+	round_4(iv, g_rot, g_k, nay);
 }
 
 void		rounds_and_fix(t_ssl *ssl)
@@ -112,7 +116,7 @@ void		rounds_and_fix(t_ssl *ssl)
 	i = 0;
 	while (i < (ssl->numBlock))
 	{
-		rounds(ssl->iv, rot, k, ssl->word[i]);
+		rounds(ssl->iv, g_rot, g_k, ssl->word[i]);
 		ssl->iv[0] += ssl->uv[0];
 		ssl->iv[1] += ssl->uv[1];
 		ssl->iv[2] += ssl->uv[2];

@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/24 14:10:14 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/10/30 12:52:19 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/10 17:48:18 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_bzero(void *s, size_t n)
 {
 	size_t	i;
-	int	*ptr;
+	int		*ptr;
 
 	i = 0;
 	ptr = (int *)s;

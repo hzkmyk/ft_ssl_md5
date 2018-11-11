@@ -6,13 +6,13 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 21:22:27 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/09 17:16:06 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/10 17:40:12 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ssl.h"
 
-int			little_endian(int iv)
+int		little_endian(int iv)
 {
 	int	tmp[4];
 
@@ -24,7 +24,7 @@ int			little_endian(int iv)
 	return (tmp[0]);
 }
 
-void		fix_value(u_int32_t *iv)
+void	fix_value(u_int32_t *iv)
 {
 	int i;
 

@@ -6,13 +6,13 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/20 16:28:45 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/08/01 19:25:36 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/10 17:41:38 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		no_m_no_l_w_is_biggest(char *a, int *w_n_p, int count, char *s)
+int	no_m_no_l_w_is_biggest(char *a, int *w_n_p, int count, char *s)
 {
 	int	i;
 	int	j;
@@ -38,7 +38,7 @@ int		no_m_no_l_w_is_biggest(char *a, int *w_n_p, int count, char *s)
 	return (count2(a));
 }
 
-int		no_m_no_l_p_is_biggest(char *a, int *w_n_p, int count, char *s)
+int	no_m_no_l_p_is_biggest(char *a, int *w_n_p, int count, char *s)
 {
 	int	i;
 	int	j;
@@ -60,7 +60,7 @@ int		no_m_no_l_p_is_biggest(char *a, int *w_n_p, int count, char *s)
 	return (i);
 }
 
-int		no_m_no_l_c_is_biggest(char *a, int *w_n_p, int count, char *s)
+int	no_m_no_l_c_is_biggest(char *a, int *w_n_p, int count, char *s)
 {
 	int	i;
 	int	j;
@@ -89,7 +89,7 @@ int		no_m_no_l_c_is_biggest(char *a, int *w_n_p, int count, char *s)
 	return (i);
 }
 
-int		no_minus_n_no_l_2(va_list ap, char *s, int *w_n_p)
+int	no_minus_n_no_l_2(va_list ap, char *s, int *w_n_p)
 {
 	int		count;
 	char	*a;
@@ -107,7 +107,7 @@ int		no_minus_n_no_l_2(va_list ap, char *s, int *w_n_p)
 		return (no_m_no_l_c_is_biggest(a, w_n_p, count, s));
 }
 
-int		specifier_small_s(va_list ap, char *save_f, int *w_n_p, char *save_l)
+int	specifier_small_s(va_list ap, char *save_f, int *w_n_p, char *save_l)
 {
 	wchar_t	*w;
 	char	*s;

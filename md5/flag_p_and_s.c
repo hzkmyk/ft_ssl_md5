@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/04 17:57:59 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/09 18:13:35 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/10 17:39:49 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int		disable_s(int i)
 
 void	flag_s(char **argv, int *i, t_ssl *ssl)
 {
-	int			len;
+	int	len;
 
 	initialize_ivuv(ssl);
 	if ((len = ft_strchr_i(argv[i[0]], 's')) > 0 && argv[i[0]][len + 1])

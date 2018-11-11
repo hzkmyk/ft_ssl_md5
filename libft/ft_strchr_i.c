@@ -6,13 +6,13 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/25 11:32:29 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/10/25 11:33:46 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/10 17:49:32 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 
-int ft_strchr_i(const char *s, int c)
+int	ft_strchr_i(const char *s, int c)
 {
 	int i;
 

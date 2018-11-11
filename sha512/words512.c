@@ -6,28 +6,47 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 16:38:42 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/09 14:58:19 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/10 19:43:47 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ssl.h"
 
-u_int64_t	**words512_2(t_ssl *ssl)
+u_int64_t	**words512_3(t_ssl *ssl)
 {
 	int i;
 	int k;
-	
+
 	k = -1;
-    while (++k < ssl->numBlock)
-    {
-        i = 16;
-        while (i < 80)
-        {
-            ssl->word512[k][i] = w512(ssl->word512[k], i);
-            i++;
-        }
-    }
+	while (++k < ssl->numBlock)
+	{
+		i = 16;
+		while (i < 80)
+		{
+			ssl->word512[k][i] = w512(ssl->word512[k], i);
+			i++;
+		}
+	}
 	return (ssl->word512);
+}
+
+void	words512_2(t_ssl *ssl, int i, int j, int k)
+{
+	ssl->word512[k][j] = ssl->block512[k][i] << 56;
+	ssl->word512[k][j] = ssl->word512[k][j]
+	+ (ssl->block512[k][i + 1] << 48);
+	ssl->word512[k][j] = ssl->word512[k][j]
+	+ (ssl->block512[k][i + 2] << 40);
+	ssl->word512[k][j] = ssl->word512[k][j]
+	+ (ssl->block512[k][i + 3] << 32);
+	ssl->word512[k][j] = ssl->word512[k][j]
+	+ (ssl->block512[k][i + 4] << 24);
+	ssl->word512[k][j] = ssl->word512[k][j]
+	+ (ssl->block512[k][i + 5] << 16);
+	ssl->word512[k][j] = ssl->word512[k][j]
+	+ (ssl->block512[k][i + 6] << 8);
+	ssl->word512[k][j] = ssl->word512[k][j]
+	+ ssl->block512[k][i + 7];
 }
 
 u_int64_t	**words512(t_ssl *ssl)
@@ -48,17 +67,10 @@ u_int64_t	**words512(t_ssl *ssl)
 		j = 0;
 		while (i < 128)
 		{
-			ssl->word512[k][j] = ssl->block512[k][i] << 56;
-			ssl->word512[k][j] = ssl->word512[k][j] + (ssl->block512[k][i + 1] << 48);
-			ssl->word512[k][j] = ssl->word512[k][j] + (ssl->block512[k][i + 2] << 40);
-			ssl->word512[k][j] = ssl->word512[k][j] + (ssl->block512[k][i + 3] << 32);
-			ssl->word512[k][j] = ssl->word512[k][j] + (ssl->block512[k][i + 4] << 24);
-			ssl->word512[k][j] = ssl->word512[k][j] + (ssl->block512[k][i + 5] << 16);
-			ssl->word512[k][j] = ssl->word512[k][j] + (ssl->block512[k][i + 6] << 8);
-			ssl->word512[k][j] = ssl->word512[k][j] + ssl->block512[k][i + 7];
+			words512_2(ssl, i, j, k);
 			i += 8;
 			j += 1;
 		}
 	}
-	return (words512_2(ssl));
+	return (words512_3(ssl));
 }

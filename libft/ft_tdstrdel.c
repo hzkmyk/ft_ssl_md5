@@ -6,13 +6,13 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/30 18:10:53 by syamada           #+#    #+#             */
-/*   Updated: 2018/10/29 17:15:16 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/10 17:40:47 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void		ft_tdstrdel(char ***tdstr)
+void	ft_tdstrdel(char ***tdstr)
 {
 	int		i;
 	char	**tmp;

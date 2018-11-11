@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 22:19:34 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/09 18:16:41 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/10 19:59:26 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	def512(t_ssl *ssl, int *i)
 {
-	char		buff[1024];
-	char		*input;
-	int			readsize;
-	char		*tmp;
+	char	buff[1024];
+	char	*input;
+	int		readsize;
+	char	*tmp;
 
 	val512(ssl);
 	i[1] = disable_s(i[1]);
@@ -48,7 +48,7 @@ void	flag_p512(t_ssl *ssl, int *i)
 
 void	def_with_arg512(char **argv, int *i, t_ssl *ssl)
 {
-	char		*file;
+	char	*file;
 
 	val512(ssl);
 	i[1] = disable_s(i[1]);
@@ -74,7 +74,7 @@ void	def_with_arg512(char **argv, int *i, t_ssl *ssl)
 		ft_printf("ft_ssl: sha512: %s: %s\n", argv[i[0]], strerror(errno));
 }
 
-void		flag_s512(char **argv, int *i, t_ssl *ssl)
+void	flag_s512(char **argv, int *i, t_ssl *ssl)
 {
 	int			len;
 
@@ -101,16 +101,16 @@ void		flag_s512(char **argv, int *i, t_ssl *ssl)
 	i[1] = 1;
 }
 
-void    sha512(int argc, char **argv)
+void	sha512(int argc, char **argv)
 {
-    t_ssl   *ssl;
-    int     i[2];
+	t_ssl	*ssl;
+	int		i[2];
 
-    ssl = inssl(i, argc, argv);
-    do
-    {
-        flags(argv, i, ssl);
-        if (ISSAME(*ssl->pqrs, P))
+	ssl = inssl(i, argc, argv);
+	while (argv[i[0]])
+	{
+		flags(argv, i, ssl);
+		if (ISSAME(*ssl->pqrs, P))
 		{
 			flag_p512(ssl, i);
 			continue ;
@@ -125,5 +125,7 @@ void    sha512(int argc, char **argv)
 		if (ISSAME(*ssl->pqrs, S) && i[1] != 2)
 			flag_s512(argv, i, ssl);
 		i[0]++;
-    } while (argv[i[0]]);
+	}
+	free (ssl->pqrs);
+	free(ssl);
 }

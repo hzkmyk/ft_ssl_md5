@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 15:13:00 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/09 18:04:11 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/10 19:58:33 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	def_with_arg256(char **argv, int *i, t_ssl *ssl)
 		ft_printf("ft_ssl: sha256: %s: %s\n", argv[i[0]], strerror(errno));
 }
 
-void		flag_s256(char **argv, int *i, t_ssl *ssl)
+void	flag_s256(char **argv, int *i, t_ssl *ssl)
 {
 	int			len;
 
@@ -101,13 +101,13 @@ void		flag_s256(char **argv, int *i, t_ssl *ssl)
 	i[1] = 1;
 }
 
-void    	sha256(int argc, char **argv)
+void	sha256(int argc, char **argv)
 {
-    t_ssl		*ssl;
+	t_ssl		*ssl;
 	int			i[2];
-    
+	
 	ssl = inssl(i, argc, argv);
-	do
+	while (argv[i[0]])
 	{	
 		flags(argv, i, ssl);
 		if (ISSAME(*ssl->pqrs, P))
@@ -125,7 +125,7 @@ void    	sha256(int argc, char **argv)
 		if (ISSAME(*ssl->pqrs, S) && i[1] != 2)
 			flag_s256(argv, i, ssl);
 		i[0]++;
-	} while (argv[i[0]]);
+	}
 	free (ssl->pqrs);
 	free(ssl);
 }

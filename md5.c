@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/26 12:46:30 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/09 17:30:39 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/10 19:57:06 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ void	def(t_ssl *ssl, int *i)
 	ft_strdel(&input);
 	ft_fdintdel(&ssl->block, ssl);
 	ft_fduintdel(&ssl->word, ssl);
-	ft_printf("%.8x%.8x%.8x%.8x\n", ssl->iv[0], ssl->iv[1], ssl->iv[2], ssl->iv[3]);
+	ft_printf("%.8x%.8x%.8x%.8x\n",
+	ssl->iv[0], ssl->iv[1], ssl->iv[2], ssl->iv[3]);
 }
 
 void	def_with_arg(char **argv, int *i, t_ssl *ssl)
@@ -55,12 +56,7 @@ void	def_with_arg(char **argv, int *i, t_ssl *ssl)
 		ft_strdel(&file);
 		ft_fdintdel(&ssl->block, ssl);
 		ft_fduintdel(&ssl->word, ssl);
-		if (ISSAME(*ssl->pqrs, Q))
-			ft_printf("%.8x%.8x%.8x%.8x\n", ssl->iv[0], ssl->iv[1], ssl->iv[2], ssl->iv[3]);
-		else if (ISSAME(*ssl->pqrs, R))
-			ft_printf("%.8x%.8x%.8x%.8x %s\n", ssl->iv[0], ssl->iv[1], ssl->iv[2], ssl->iv[3], argv[i[0]]);
-		else
-			ft_printf("MD5 (%s) = %.8x%.8x%.8x%.8x\n", argv[i[0]], ssl->iv[0], ssl->iv[1], ssl->iv[2], ssl->iv[3]);
+		printdefwitharg(ssl, argv, i);
 	}
 	else if (is_directory(argv[i[0]]))
 		ft_printf("md5: %s: Is a directory\n", argv[i[0]]);
@@ -68,7 +64,7 @@ void	def_with_arg(char **argv, int *i, t_ssl *ssl)
 		ft_printf("ft_ssl: md5: %s: %s\n", argv[i[0]], strerror(errno));
 }
 
-void			noarg(int argc, t_ssl *ssl, char **argv, int *i)
+void	noarg(int argc, t_ssl *ssl, char **argv, int *i)
 {
 	if (argc == 2 && !ft_strcmp(argv[1], "md5"))
 	{
@@ -92,7 +88,7 @@ void			noarg(int argc, t_ssl *ssl, char **argv, int *i)
 	}
 }
 
-t_ssl			*inssl(int *i, int argc, char **argv)
+t_ssl	*inssl(int *i, int argc, char **argv)
 {
 	t_ssl *ssl;
 
@@ -108,13 +104,13 @@ t_ssl			*inssl(int *i, int argc, char **argv)
 	return (ssl);
 }
 
-void			md5(int argc, char **argv)
+void	md5(int argc, char **argv)
 {
 	t_ssl		*ssl;
 	int			i[2];
 
 	ssl = inssl(i, argc, argv);
-	do 
+	while (argv[i[0]])
 	{	
 		flags(argv, i, ssl);
 		if (ISSAME(*ssl->pqrs, P))
@@ -132,7 +128,7 @@ void			md5(int argc, char **argv)
 		if (ISSAME(*ssl->pqrs, S) && i[1] != 2)
 			flag_s(argv, i, ssl);
 		i[0]++;
-	} while (argv[i[0]]);
+	}
 	free (ssl->pqrs);
 	free(ssl);
 }

@@ -6,13 +6,13 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/04 18:08:26 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/08 17:56:47 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/10 19:00:52 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ssl.h"
 
-const u_int32_t	sha256K[64] = {
+const u_int32_t	g_sha256k[64] = {
 	0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5,
 	0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
 	0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3,
@@ -31,7 +31,7 @@ const u_int32_t	sha256K[64] = {
 	0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2
 };
 
-t_ssl	*val256(t_ssl *ssl)
+t_ssl			*val256(t_ssl *ssl)
 {
 	ssl->iv[0] = 0x6a09e667;
 	ssl->iv[1] = 0xbb67ae85;
@@ -52,39 +52,40 @@ t_ssl	*val256(t_ssl *ssl)
 	return (ssl);
 }
 
-void    fix256_2(t_ssl *ssl)
+void			fix256_2(t_ssl *ssl)
 {
-    ssl->iv[0] += ssl->uv[0];
-    ssl->iv[1] += ssl->uv[1];
-    ssl->iv[2] += ssl->uv[2];
-    ssl->iv[3] += ssl->uv[3];
-    ssl->iv[4] += ssl->uv[4];
-    ssl->iv[5] += ssl->uv[5];
-    ssl->iv[6] += ssl->uv[6];
-    ssl->iv[7] += ssl->uv[7];
-    ssl->uv[0] = ssl->iv[0];
-    ssl->uv[1] = ssl->iv[1];
-    ssl->uv[2] = ssl->iv[2];
-    ssl->uv[3] = ssl->iv[3];
-    ssl->uv[4] = ssl->iv[4];
-    ssl->uv[5] = ssl->iv[5];
-    ssl->uv[6] = ssl->iv[6];
-    ssl->uv[7] = ssl->iv[7];
+	ssl->iv[0] += ssl->uv[0];
+	ssl->iv[1] += ssl->uv[1];
+	ssl->iv[2] += ssl->uv[2];
+	ssl->iv[3] += ssl->uv[3];
+	ssl->iv[4] += ssl->uv[4];
+	ssl->iv[5] += ssl->uv[5];
+	ssl->iv[6] += ssl->uv[6];
+	ssl->iv[7] += ssl->uv[7];
+	ssl->uv[0] = ssl->iv[0];
+	ssl->uv[1] = ssl->iv[1];
+	ssl->uv[2] = ssl->iv[2];
+	ssl->uv[3] = ssl->iv[3];
+	ssl->uv[4] = ssl->iv[4];
+	ssl->uv[5] = ssl->iv[5];
+	ssl->uv[6] = ssl->iv[6];
+	ssl->uv[7] = ssl->iv[7];
 }
 
-void	fix256(t_ssl *ssl)
+void			fix256(t_ssl *ssl)
 {
-    int i;
+	int i;
 	int j;
 	int	tmp[2];
 
 	i = 0;
 	while (i < ssl->numBlock)
 	{
-		j = 0;
-		while (j < 64)
+		j = -1;
+		while (++j < 64)
 		{
-			tmp[0] = ssl->iv[7] + s2(ssl) + ch(ssl) + sha256K[j] + ssl->word[i][j];
+			tmp[0] = ssl->iv[7] + s2(ssl) + ch(ssl)
+			+ g_sha256k[j] + ssl->word[i][j];
 			tmp[1] = s3(ssl) + maj(ssl);
 			ssl->iv[7] = ssl->iv[6];
 			ssl->iv[6] = ssl->iv[5];
@@ -94,7 +95,6 @@ void	fix256(t_ssl *ssl)
 			ssl->iv[2] = ssl->iv[1];
 			ssl->iv[1] = ssl->iv[0];
 			ssl->iv[0] = tmp[0] + tmp[1];
-			j++;
 		}
 		i++;
 		fix256_2(ssl);
