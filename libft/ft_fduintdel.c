@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 21:59:06 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/10 18:47:25 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/11 14:43:48 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_fduintdel(u_int32_t ***ap, t_ssl *ssl)
 	tmp = *ap;
 	if (tmp && *tmp)
 	{
-		while (i < ssl->numBlock)
+		while (i < ssl->numblock)
 		{
 			ft_uintdel(&tmp[i]);
 			i++;

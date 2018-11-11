@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 21:58:40 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/10 18:09:34 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/11 14:43:43 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_fdintdel(int ***ap, t_ssl *ssl)
 	tmp = *ap;
 	if (tmp && *tmp)
 	{
-		while (i < ssl->numBlock)
+		while (i < ssl->numblock)
 		{
 			ft_intdel(&tmp[i]);
 			i++;

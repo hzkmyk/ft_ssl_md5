@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 14:27:52 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/11 14:28:38 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/11 14:51:17 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,74 +29,67 @@
 # define LEFTROTATE(rot, x) ((x << rot | x >> (32 - rot)))
 # define RIGHTROTATE(rot, x) ((x >> rot | x << (32 - rot)))
 # define RIGHTROTATE512(rot, x) ((x >> rot | x << (64 - rot)))
-
-typedef struct		s_ssl
-{
-	u_int32_t		iv[8];
-	u_int32_t		uv[8];
-	u_int64_t		iv512[8];
-	u_int64_t		uv512[8];
-	int				**block;
-	u_int64_t		**block512;
-	u_int32_t		**word;
-	u_int64_t		**word512;
-	int				*pqrs;
-	int				numBlock;
-}					t_ssl;
-
 # include "ft_ssl_md5.h"
 # include "ft_ssl_sha256.h"
 # include "ft_ssl_sha512.h"
 # include "ft_ssl_sha384.h"
 
-typedef void	(hash)(int, char **);
+typedef void		(t_hash)(int, char **);
+
 typedef struct		s_dsptch
 {
 	char			*name;
-	hash			*hash;
+	t_hash			*hash;
 }					t_dsptch;
 
 /*
 ** flagPflagS.c
 */
 int					disable_s(int i);
-
-/* padding.c */
+/*
+** padding.c
+*/
 int					**padding5(const char *argv, t_ssl *ssl);
 int					**padding256(const char *argv, t_ssl *ssl);
 u_int64_t			**padding512(const char *argv, t_ssl *ssl);
 int					**malloc_blocks(const char *argv, t_ssl *ssl);
-
-/* flag.c */
+/*
+** flag.c
+*/
 void				flags(char **argv, int *i, t_ssl *ssl);
 char				*save_line(char **argv, int i);
-
-/* check.c */
+/*
+** check.c
+*/
 int					is_directory(char *argv);
 int					is_file(char *argv);
-
-/* md5.c */
+/*
+** md5.c
+*/
 void				md5(int argc, char **argv);
 t_ssl				*inssl(int *i, int argc, char **argv);
-
-/* sha256.c */
+/*
+** sha256.c
+*/
 void				sha256(int argc, char **argv);
-
-/* sha512.c */
+/*
+** sha512.c
+*/
 void				sha512(int argc, char **argv);
-
-
-/* sha384.c */
+/*
+** sha384.c
+*/
 void				sha384(int argc, char **argv);
-
-/* libft func */
+/*
+** libft func
+*/
 void				ft_fdintdel(int ***ap, t_ssl *ssl);
 void				ft_fduintdel(u_int32_t ***ap, t_ssl *ssl);
 void				ft_fdu64intdel(u_int64_t ***ap, t_ssl *ssl);
-
 /*
 ** free.c
 */
 void				freethings(t_ssl *ssl);
 void				free64(t_ssl *ssl, char *input);
+
 #endif

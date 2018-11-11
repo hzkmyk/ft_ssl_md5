@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/26 12:46:30 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/11 14:00:57 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/11 14:58:14 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ t_ssl	*inssl(int *i, int argc, char **argv)
 	ssl->word = NULL;
 	ssl->pqrs = (int *)malloc(sizeof(int));
 	*ssl->pqrs = 0;
-	ssl->numBlock = 0;
+	ssl->numblock = 0;
 	i[1] = 0;
 	i[0] = 2;
 	noarg(argc, ssl, argv, i);

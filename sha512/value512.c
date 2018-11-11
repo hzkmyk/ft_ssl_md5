@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 17:11:26 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/10 19:19:02 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/11 14:45:55 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void			fix512(t_ssl *ssl)
 	u_int64_t	tmp[2];
 
 	i = 0;
-	while (i < ssl->numBlock)
+	while (i < ssl->numblock)
 	{
 		j = -1;
 		while (++j < 80)

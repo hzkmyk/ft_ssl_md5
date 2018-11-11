@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/26 13:46:08 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/11 14:01:52 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/11 14:46:48 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ int			**malloc_blocks(const char *argv, t_ssl *ssl)
 
 	i = ft_strlen(argv);
 	j = 0;
-	ssl->numBlock = i / 64;
+	ssl->numblock = i / 64;
 	if (i % 64 > 55)
-		ssl->numBlock += 2;
+		ssl->numblock += 2;
 	else if (i % 64 < 56)
-		ssl->numBlock += 1;
-	ssl->block = (int **)malloc(sizeof(int *) * ssl->numBlock);
-	while (j < (ssl->numBlock))
+		ssl->numblock += 1;
+	ssl->block = (int **)malloc(sizeof(int *) * ssl->numblock);
+	while (j < (ssl->numblock))
 	{
 		ssl->block[j] = (int *)malloc(sizeof(int) * 64);
 		ft_bzero(ssl->block[j], 64);
@@ -41,13 +41,13 @@ u_int64_t	**malloc_blocks512(const char *argv, t_ssl *ssl)
 
 	i = ft_strlen(argv);
 	j = 0;
-	ssl->numBlock = i / 128;
+	ssl->numblock = i / 128;
 	if (i % 128 > 111)
-		ssl->numBlock += 2;
+		ssl->numblock += 2;
 	else if (i % 128 < 112)
-		ssl->numBlock += 1;
-	ssl->block512 = (u_int64_t **)malloc(sizeof(u_int64_t *) * ssl->numBlock);
-	while (j < (ssl->numBlock))
+		ssl->numblock += 1;
+	ssl->block512 = (u_int64_t **)malloc(sizeof(u_int64_t *) * ssl->numblock);
+	while (j < (ssl->numblock))
 	{
 		ssl->block512[j] = (u_int64_t *)malloc(sizeof(u_int64_t) * 128);
 		ft_bzero(ssl->block512[j], 128);
@@ -65,7 +65,7 @@ u_int64_t	**padding512(const char *argv, t_ssl *ssl)
 	i = 0;
 	k = 0;
 	ssl->block512 = malloc_blocks512(argv, ssl);
-	while (i < (ssl->numBlock))
+	while (i < (ssl->numblock))
 	{
 		j = 0;
 		while (j < 128 && argv[k])
@@ -94,7 +94,7 @@ int			**padding256(const char *argv, t_ssl *ssl)
 	i = 0;
 	k = 0;
 	ssl->block = malloc_blocks(argv, ssl);
-	while (i < (ssl->numBlock))
+	while (i < (ssl->numblock))
 	{
 		j = 0;
 		while (j < 64 && argv[k])
@@ -123,7 +123,7 @@ int			**padding5(const char *argv, t_ssl *ssl)
 	i = 0;
 	k = -1;
 	ssl->block = malloc_blocks(argv, ssl);
-	while (i < (ssl->numBlock))
+	while (i < (ssl->numblock))
 	{
 		j = -1;
 		while (j++ < 64 && argv[++k])

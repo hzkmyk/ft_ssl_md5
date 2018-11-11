@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/04 17:31:16 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/10 18:54:40 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/11 14:44:30 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void		rounds_and_fix(t_ssl *ssl)
 	int	i;
 
 	i = 0;
-	while (i < (ssl->numBlock))
+	while (i < (ssl->numblock))
 	{
 		rounds(ssl->iv, g_rot, g_k, ssl->word[i]);
 		ssl->iv[0] += ssl->uv[0];

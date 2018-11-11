@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/04 18:08:26 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/10 19:00:52 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/11 14:45:15 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void			fix256(t_ssl *ssl)
 	int	tmp[2];
 
 	i = 0;
-	while (i < ssl->numBlock)
+	while (i < ssl->numblock)
 	{
 		j = -1;
 		while (++j < 64)

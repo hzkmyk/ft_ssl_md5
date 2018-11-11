@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 19:42:43 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/10 18:47:05 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/11 14:43:46 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_fdu64intdel(u_int64_t ***ap, t_ssl *ssl)
 	tmp = *ap;
 	if (tmp && *tmp)
 	{
-		while (i < ssl->numBlock)
+		while (i < ssl->numblock)
 		{
 			ft_u64intdel(&tmp[i]);
 			i++;

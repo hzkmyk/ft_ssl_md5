@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/09 15:33:36 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/11 14:07:08 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/11 14:47:32 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	def_with_arg384(char **argv, int *i, t_ssl *ssl)
 		ft_strdel(&file);
 		ft_fdu64intdel(&ssl->block512, ssl);
 		ft_fdu64intdel(&ssl->word512, ssl);
-		printdefwitharg384(ssl);
+		printdefwitharg384(ssl, argv, i);
 	}
 	else if (is_directory(argv[i[0]]))
 		ft_printf("sha384: %s: Is a directory\n", argv[i[0]]);
