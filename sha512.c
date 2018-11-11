@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 22:19:34 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/10 19:59:26 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/11 14:19:45 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ void	def512(t_ssl *ssl, int *i)
 	ssl->block512 = padding512(input, ssl);
 	ssl->word512 = words512(ssl);
 	fix512(ssl);
-	ft_strdel(&input);
-	ft_fdu64intdel(&ssl->block512, ssl);
-	ft_fdu64intdel(&ssl->word512, ssl);
-	ft_printf("%.16llx%.16llx%.16llx%.16llx%.16llx%.16llx%.16llx%.16llx\n", ssl->uv512[0], ssl->uv512[1], ssl->uv512[2], ssl->uv512[3], ssl->uv512[4], ssl->uv512[5], ssl->uv512[6], ssl->uv512[7]);
+	free64(ssl, input);
+	ft_printf("%.16llx%.16llx%.16llx%.16llx%.16llx%.16llx%.16llx"
+	"%.16llx\n", ssl->uv512[0], ssl->uv512[1], ssl->uv512[2], ssl->uv512[3],
+	ssl->uv512[4], ssl->uv512[5], ssl->uv512[6], ssl->uv512[7]);
 }
 
 void	flag_p512(t_ssl *ssl, int *i)
@@ -58,15 +58,8 @@ void	def_with_arg512(char **argv, int *i, t_ssl *ssl)
 		ssl->block512 = padding512(file, ssl);
 		ssl->word512 = words512(ssl);
 		fix512(ssl);
-		ft_strdel(&file);
-		ft_fdu64intdel(&ssl->block512, ssl);
-		ft_fdu64intdel(&ssl->word512, ssl);
-		if (ISSAME(*ssl->pqrs, Q))
-			ft_printf("%.16llx%.16llx%.16llx%.16llx%.16llx%.16llx%.16llx%.16llx\n", ssl->uv512[0], ssl->uv512[1], ssl->uv512[2], ssl->uv512[3], ssl->uv512[4], ssl->uv512[5], ssl->uv512[6], ssl->uv512[7]);
-		else if (ISSAME(*ssl->pqrs, R))
-			ft_printf("%.16llx%.16llx%.16llx%.16llx%.16llx%.16llx%.16llx%.16llx %s\n", ssl->uv512[0], ssl->uv512[1], ssl->uv512[2], ssl->uv512[3], ssl->uv512[4], ssl->uv512[5], ssl->uv512[6], ssl->uv512[7], argv[i[0]]);
-		else
-			ft_printf("sha512 (%s) = %.16llx%.16llx%.16llx%.16llx%.16llx%.16llx%.16llx%.16llx\n", argv[i[0]], ssl->uv512[0], ssl->uv512[1], ssl->uv512[2], ssl->uv512[3], ssl->uv512[4], ssl->uv512[5], ssl->uv512[6], ssl->uv512[7]);
+		free64(ssl, file);
+		printdefwitharg512(ssl, argv, i);
 	}
 	else if (is_directory(argv[i[0]]))
 		ft_printf("sha512: %s: Is a directory\n", argv[i[0]]);
@@ -90,7 +83,7 @@ void	flag_s512(char **argv, int *i, t_ssl *ssl)
 		{
 			ft_printf("sha512: option requires an argument -- s\n"
 			"usage: sha512 [-pqrtx] [-s string] [files ...]\n");
-			exit (1);
+			exit(1);
 		}
 	}
 	ssl->word512 = words512(ssl);
@@ -118,14 +111,14 @@ void	sha512(int argc, char **argv)
 		else if (argv[i[0]] == NULL)
 		{
 			def512(ssl, i);
-			break;
+			break ;
 		}
-		if (((!ISSAME(*ssl->pqrs, P) && !ISSAME(*ssl->pqrs, S) && (argv[i[0]]))) || i[1] == 2)
+		if (((!ISSAME(*ssl->pqrs, P) && !ISSAME(*ssl->pqrs, S)
+		&& (argv[i[0]]))) || i[1] == 2)
 			def_with_arg512(argv, i, ssl);
 		if (ISSAME(*ssl->pqrs, S) && i[1] != 2)
 			flag_s512(argv, i, ssl);
 		i[0]++;
 	}
-	free (ssl->pqrs);
-	free(ssl);
+	freethings(ssl);
 }

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/04 13:05:40 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/10 17:30:41 by hmiyake          ###   ########.fr       */
+/*   Created: 2018/11/11 14:27:52 by hmiyake           #+#    #+#             */
+/*   Updated: 2018/11/11 14:28:38 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <string.h>
 # include <fcntl.h>
 # define ISSAME(pqrs, flag) ((pqrs & flag) == flag)
+# define FUNCNUM 4
 # define P 8
 # define Q 4
 # define R 2
@@ -92,4 +93,10 @@ void				sha384(int argc, char **argv);
 void				ft_fdintdel(int ***ap, t_ssl *ssl);
 void				ft_fduintdel(u_int32_t ***ap, t_ssl *ssl);
 void				ft_fdu64intdel(u_int64_t ***ap, t_ssl *ssl);
+
+/*
+** free.c
+*/
+void				freethings(t_ssl *ssl);
+void				free64(t_ssl *ssl, char *input);
 #endif

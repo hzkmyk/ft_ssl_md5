@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 16:38:42 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/10 19:43:47 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/11 14:23:54 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 u_int64_t	**words512_3(t_ssl *ssl)
 {
-	int i;
-	int k;
+	int	i;
+	int	k;
 
 	k = -1;
 	while (++k < ssl->numBlock)
@@ -30,7 +30,7 @@ u_int64_t	**words512_3(t_ssl *ssl)
 	return (ssl->word512);
 }
 
-void	words512_2(t_ssl *ssl, int i, int j, int k)
+void		words512_2(t_ssl *ssl, int i, int j, int k)
 {
 	ssl->word512[k][j] = ssl->block512[k][i] << 56;
 	ssl->word512[k][j] = ssl->word512[k][j]
@@ -51,9 +51,9 @@ void	words512_2(t_ssl *ssl, int i, int j, int k)
 
 u_int64_t	**words512(t_ssl *ssl)
 {
-	int			i;
-	int			j;
-	int			k;
+	int	i;
+	int	j;
+	int	k;
 
 	j = 0;
 	k = -1;

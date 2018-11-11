@@ -1,33 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ssl_sha384.h                                    :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/09 16:36:50 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/11 14:27:02 by hmiyake          ###   ########.fr       */
+/*   Created: 2018/11/11 13:57:08 by hmiyake           #+#    #+#             */
+/*   Updated: 2018/11/11 14:23:18 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_SSL_SHA384_H
-# define FT_SSL_SHA384_H
-# include "ft_ssl.h"
+#include "includes/ft_ssl.h"
 
-/*
-** sha384.c
-*/
-void	def384(t_ssl *ssl, int *i);
+void	freethings(t_ssl *ssl)
+{
+	free(ssl->pqrs);
+	free(ssl);
+}
 
-/*
-** printdef.c && printflags.c
-*/
-void	printdefwitharg384(t_ssl *ssl, char **argv, int *i);
-void	printflags384(t_ssl *ssl, char **argv, int len, int *i);
-
-/*
-** value512.c
-*/
-t_ssl	*val384(t_ssl *ssl);
-
-#endif
+void	free64(t_ssl *ssl, char *input)
+{
+	ft_strdel(&input);
+	ft_fdu64intdel(&ssl->block512, ssl);
+	ft_fdu64intdel(&ssl->word512, ssl);
+}

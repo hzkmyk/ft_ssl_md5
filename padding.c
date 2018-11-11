@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/26 13:46:08 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/10 17:33:40 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/11 14:01:52 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ u_int64_t	**padding512(const char *argv, t_ssl *ssl)
 		}
 		i++;
 		if (!argv[k])
-			break;
+			break ;
 	}
 	i -= 1;
 	ssl->block512[i][j] = 128;
@@ -105,7 +105,7 @@ int			**padding256(const char *argv, t_ssl *ssl)
 		}
 		i++;
 		if (!argv[k])
-			break;
+			break ;
 	}
 	i -= 1;
 	ssl->block[i][j] = 128;
@@ -130,7 +130,7 @@ int			**padding5(const char *argv, t_ssl *ssl)
 			ssl->block[i][j] = argv[k];
 		i++;
 		if (!argv[k])
-			break;
+			break ;
 	}
 	i -= 1;
 	ssl->block[i][j] = 128;

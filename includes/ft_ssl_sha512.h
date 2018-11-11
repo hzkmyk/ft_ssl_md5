@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 17:29:58 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/10 16:48:27 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/11 14:26:57 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,9 @@ u_int64_t	ch512(t_ssl *ssl);
 u_int64_t	maj512(t_ssl *ssl);
 
 /*
-** print.c
+** printdef.c && printflags.c
 */
+void		printdefwitharg512(t_ssl *ssl, char **argv, int *i);
 void		printflags512(t_ssl *ssl, char **argv, int len, int *i);
 
 #endif

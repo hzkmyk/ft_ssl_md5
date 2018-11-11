@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/26 12:46:30 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/10 19:57:06 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/11 14:00:57 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,22 +69,22 @@ void	noarg(int argc, t_ssl *ssl, char **argv, int *i)
 	if (argc == 2 && !ft_strcmp(argv[1], "md5"))
 	{
 		def(ssl, i);
-		exit (0);
+		exit(0);
 	}
 	else if (argc == 2 && !ft_strcmp(argv[1], "sha256"))
 	{
 		def256(ssl, i);
-		exit (0);
+		exit(0);
 	}
 	else if (argc == 2 && !ft_strcmp(argv[1], "sha512"))
 	{
 		def512(ssl, i);
-		exit (0);
+		exit(0);
 	}
 	else if (argc == 2 && !ft_strcmp(argv[1], "sha384"))
 	{
 		def384(ssl, i);
-		exit (0);
+		exit(0);
 	}
 }
 
@@ -111,24 +111,24 @@ void	md5(int argc, char **argv)
 
 	ssl = inssl(i, argc, argv);
 	while (argv[i[0]])
-	{	
+	{
 		flags(argv, i, ssl);
 		if (ISSAME(*ssl->pqrs, P))
 		{
 			flag_p(ssl, i);
-			continue;
+			continue ;
 		}
 		else if (argv[i[0]] == NULL)
 		{
 			def(ssl, i);
-			break;
+			break ;
 		}
-		if (((!ISSAME(*ssl->pqrs, P) && !ISSAME(*ssl->pqrs, S) && (argv[i[0]]))) || i[1] == 2)
+		if (((!ISSAME(*ssl->pqrs, P) && !ISSAME(*ssl->pqrs, S)
+		&& (argv[i[0]]))) || i[1] == 2)
 			def_with_arg(argv, i, ssl);
 		if (ISSAME(*ssl->pqrs, S) && i[1] != 2)
 			flag_s(argv, i, ssl);
 		i[0]++;
 	}
-	free (ssl->pqrs);
-	free(ssl);
+	freethings(ssl);
 }

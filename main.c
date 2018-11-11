@@ -6,29 +6,29 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/29 12:10:15 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/10 17:35:26 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/11 14:22:20 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/ft_ssl.h"
 
-t_dsptch	dsptch_table[4] = {
+t_dsptch	g_dsptch_table[FUNCNUM] = {
 	{"md5", &md5},
 	{"sha256", &sha256},
 	{"sha512", &sha512},
 	{"sha384", &sha384},
 };
 
-void dsptch(int argc, char **argv)
+void		dsptch(int argc, char **argv)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while (i < 4)
+	while (i < FUNCNUM)
 	{
-		if (ft_strequ(argv[1], dsptch_table[i].name))
+		if (ft_strequ(argv[1], g_dsptch_table[i].name))
 		{
-			dsptch_table[i].hash(argc, argv);
+			g_dsptch_table[i].hash(argc, argv);
 			return ;
 		}
 		i++;
@@ -37,10 +37,10 @@ void dsptch(int argc, char **argv)
 	ft_printf("Standard commands:\n\n");
 	ft_printf("Message Digest commands:\nmd5\nsha256\n\n");
 	ft_printf("Cipher commands:\n");
-	exit (1);
+	exit(1);
 }
 
-int main(int argc, char **argv)
+int			main(int argc, char **argv)
 {
 	if (argc < 2)
 	{

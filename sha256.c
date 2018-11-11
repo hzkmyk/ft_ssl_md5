@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 15:13:00 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/10 19:58:33 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/11 13:59:13 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ void	def256(t_ssl *ssl, int *i)
 	ft_strdel(&input);
 	ft_fdintdel(&ssl->block, ssl);
 	ft_fduintdel(&ssl->word, ssl);
-	ft_printf("%.8x%.8x%.8x%.8x%.8x%.8x%.8x%.8x\n", ssl->uv[0], ssl->uv[1], ssl->uv[2], ssl->uv[3], ssl->uv[4], ssl->uv[5], ssl->uv[6], ssl->uv[7]);
+	ft_printf("%.8x%.8x%.8x%.8x%.8x%.8x%.8x%.8x\n", ssl->uv[0], ssl->uv[1],
+	ssl->uv[2], ssl->uv[3], ssl->uv[4], ssl->uv[5], ssl->uv[6], ssl->uv[7]);
 }
 
 void	flag_p256(t_ssl *ssl, int *i)
@@ -61,12 +62,7 @@ void	def_with_arg256(char **argv, int *i, t_ssl *ssl)
 		ft_strdel(&file);
 		ft_fdintdel(&ssl->block, ssl);
 		ft_fduintdel(&ssl->word, ssl);
-		if (ISSAME(*ssl->pqrs, Q))
-			ft_printf("%.8x%.8x%.8x%.8x%.8x%.8x%.8x%.8x\n", ssl->uv[0], ssl->uv[1], ssl->uv[2], ssl->uv[3], ssl->uv[4], ssl->uv[5], ssl->uv[6], ssl->uv[7]);
-		else if (ISSAME(*ssl->pqrs, R))
-			ft_printf("%.8x%.8x%.8x%.8x%.8x%.8x%.8x%.8x %s\n", ssl->uv[0], ssl->uv[1], ssl->uv[2], ssl->uv[3], ssl->uv[4], ssl->uv[5], ssl->uv[6], ssl->uv[7], argv[i[0]]);
-		else
-			ft_printf("sha256 (%s) = %.8x%.8x%.8x%.8x%.8x%.8x%.8x%.8x\n", argv[i[0]], ssl->uv[0], ssl->uv[1], ssl->uv[2], ssl->uv[3], ssl->uv[4], ssl->uv[5], ssl->uv[6], ssl->uv[7]);
+		printfdefwitharg256(ssl, argv, i);
 	}
 	else if (is_directory(argv[i[0]]))
 		ft_printf("sha256: %s: Is a directory\n", argv[i[0]]);
@@ -90,7 +86,7 @@ void	flag_s256(char **argv, int *i, t_ssl *ssl)
 		{
 			ft_printf("sha256: option requires an argument -- s\n"
 			"usage: sha256 [-pqrtx] [-s string] [files ...]\n");
-			exit (1);
+			exit(1);
 		}
 	}
 	ssl->word = words256(ssl);
@@ -105,10 +101,10 @@ void	sha256(int argc, char **argv)
 {
 	t_ssl		*ssl;
 	int			i[2];
-	
+
 	ssl = inssl(i, argc, argv);
 	while (argv[i[0]])
-	{	
+	{
 		flags(argv, i, ssl);
 		if (ISSAME(*ssl->pqrs, P))
 		{
@@ -118,14 +114,14 @@ void	sha256(int argc, char **argv)
 		else if (argv[i[0]] == NULL)
 		{
 			def256(ssl, i);
-			break;
+			break ;
 		}
-		if (((!ISSAME(*ssl->pqrs, P) && !ISSAME(*ssl->pqrs, S) && (argv[i[0]]))) || i[1] == 2)
+		if (((!ISSAME(*ssl->pqrs, P) && !ISSAME(*ssl->pqrs, S)
+		&& (argv[i[0]]))) || i[1] == 2)
 			def_with_arg256(argv, i, ssl);
 		if (ISSAME(*ssl->pqrs, S) && i[1] != 2)
 			flag_s256(argv, i, ssl);
 		i[0]++;
 	}
-	free (ssl->pqrs);
-	free(ssl);
+	freethings(ssl);
 }

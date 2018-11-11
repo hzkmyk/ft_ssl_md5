@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/25 09:55:15 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/10 19:46:36 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/11 14:26:46 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void		rounds_and_fix(t_ssl *ssl);
 void		def(t_ssl *ssl, int *i);
 
 /*
-** print.c
+** printdef.c && printflags.c
 */
 void		printflags5(t_ssl *ssl, char **argv, int len, int *i);
 void		printdefwitharg(t_ssl *ssl, char **argv, int *i);
