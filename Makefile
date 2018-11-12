@@ -6,24 +6,75 @@
 #    By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/09/25 09:47:12 by hmiyake           #+#    #+#              #
-#    Updated: 2018/11/08 18:17:52 by hmiyake          ###   ########.fr        #
+#    Updated: 2018/11/11 15:55:25 by hmiyake          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ft_ssl
 
 MD5 = md5/
-SHA256 = sha256/
-SHA512 = sha512/
-SRCS = *.c
-SRCS2 = *.c
-SRCS3 = *.c
-SRCS4 = *.c
 
-SRCO = $(SRCS:.c=.o)
-SRCO2 = $(MD5)$(SRCS2:.c=.o)
-SRCO3 = $(SHA256)$(SRCS3:.c=.o)
-SRCO4 = $(SHA512)$(SRCS4:.c=.o)
+SHA256 = sha256/
+
+SHA512 = sha512/
+
+SRCS = check.c \
+	   flag.c \
+	   free.c \
+	   main.c \
+	   md5.c \
+	   padding.c \
+	   printdef.c \
+	   printflags.c \
+	   sha256.c \
+	   sha384.c \
+	   sha512.c
+
+SRCS2 = flag_p_and_s.c \
+		func5.c \
+		hash5.c \
+		little_endian.c \
+		value5.c \
+		words5.c
+
+SRCS3 = func256.c \
+		func256_2.c \
+		value256.c \
+		words256.c
+
+SRCS4 = func512.c \
+		func512_2.c \
+		value512.c \
+		words512.c
+
+SRCO = check.o \
+	   flag.o \
+	   free.o \
+	   main.o \
+	   md5.o \
+	   padding.o \
+	   printdef.o \
+	   printflags.o \
+	   sha256.o \
+	   sha384.o \
+	   sha512.o
+
+SRCO2 = $(MD5)flag_p_and_s.o \
+		$(MD5)func5.o \
+		$(MD5)hash5.o \
+		$(MD5)little_endian.o \
+		$(MD5)value5.o \
+		$(MD5)words5.o
+
+SRCO3 = $(SHA256)func256.o \
+		$(SHA256)func256_2.o \
+		$(SHA256)value256.o \
+		$(SHA256)words256.o
+
+SRCO4 = $(SHA512)func512.o \
+		$(SHA512)func512_2.o \
+		$(SHA512)value512.o \
+		$(SHA512)words512.o
 
 INCLUDES = "includes/ft_ssl.h"
 

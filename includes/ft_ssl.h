@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 14:27:52 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/11 14:51:17 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/11 15:39:33 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,23 @@ typedef struct		s_dsptch
 }					t_dsptch;
 
 /*
+** md5.c
+*/
+void				md5(int argc, char **argv);
+t_ssl				*inssl(int *i, int argc, char **argv);
+/*
+** sha256.c
+*/
+void				sha256(int argc, char **argv);
+/*
+** sha512.c
+*/
+void				sha512(int argc, char **argv);
+/*
+** sha384.c
+*/
+void				sha384(int argc, char **argv);
+/*
 ** flagPflagS.c
 */
 int					disable_s(int i);
@@ -63,23 +80,6 @@ char				*save_line(char **argv, int i);
 */
 int					is_directory(char *argv);
 int					is_file(char *argv);
-/*
-** md5.c
-*/
-void				md5(int argc, char **argv);
-t_ssl				*inssl(int *i, int argc, char **argv);
-/*
-** sha256.c
-*/
-void				sha256(int argc, char **argv);
-/*
-** sha512.c
-*/
-void				sha512(int argc, char **argv);
-/*
-** sha384.c
-*/
-void				sha384(int argc, char **argv);
 /*
 ** libft func
 */
