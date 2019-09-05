@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/11 14:27:52 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/11 15:39:33 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/11 17:44:10 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <string.h>
 # include <fcntl.h>
 # define ISSAME(pqrs, flag) ((pqrs & flag) == flag)
-# define FUNCNUM 4
+# define FUNCNUM 5
 # define P 8
 # define Q 4
 # define R 2
@@ -33,6 +33,7 @@
 # include "ft_ssl_sha256.h"
 # include "ft_ssl_sha512.h"
 # include "ft_ssl_sha384.h"
+# include "ft_ssl_sha224.h"
 
 typedef void		(t_hash)(int, char **);
 
@@ -59,6 +60,10 @@ void				sha512(int argc, char **argv);
 ** sha384.c
 */
 void				sha384(int argc, char **argv);
+/*
+** sha224.c
+*/
+void				sha224(int argc, char **argv);
 /*
 ** flagPflagS.c
 */

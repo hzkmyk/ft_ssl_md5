@@ -6,7 +6,7 @@
 #    By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/09/25 09:47:12 by hmiyake           #+#    #+#              #
-#    Updated: 2018/11/11 15:55:25 by hmiyake          ###   ########.fr        #
+#    Updated: 2018/11/11 17:32:17 by hmiyake          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,8 @@ SRCS = check.c \
 	   printflags.c \
 	   sha256.c \
 	   sha384.c \
-	   sha512.c
+	   sha512.c \
+	   sha224.c
 
 SRCS2 = flag_p_and_s.c \
 		func5.c \
@@ -57,7 +58,8 @@ SRCO = check.o \
 	   printflags.o \
 	   sha256.o \
 	   sha384.o \
-	   sha512.o
+	   sha512.o \
+	   sha224.o
 
 SRCO2 = $(MD5)flag_p_and_s.o \
 		$(MD5)func5.o \

@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   md5.c                                              :+:      :+:    :+:   */
+/*   sha224.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/09/26 12:46:30 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/11 17:45:04 by hmiyake          ###   ########.fr       */
+/*   Created: 2018/11/11 17:21:56 by hmiyake           #+#    #+#             */
+/*   Updated: 2018/11/11 17:34:10 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/ft_ssl.h"
 
-void	def(t_ssl *ssl, int *i)
+void	def224(t_ssl *ssl, int *i)
 {
 	char		buff[1024];
 	char		*input;
 	int			readsize;
 	char		*tmp;
 
-	initialize_ivuv(ssl);
+	val224(ssl);
 	i[1] = disable_s(i[1]);
 	input = ft_strnew(0);
 	while ((readsize = read(0, buff, 1024)))
@@ -31,85 +31,73 @@ void	def(t_ssl *ssl, int *i)
 	}
 	if (ISSAME(*ssl->pqrs, P))
 		ft_printf("%s", input);
-	ssl->block = padding5(input, ssl);
-	ssl->word = words(ssl);
-	rounds_and_fix(ssl);
+	ssl->block = padding256(input, ssl);
+	ssl->word = words256(ssl);
+	fix256(ssl);
 	ft_strdel(&input);
 	ft_fdintdel(&ssl->block, ssl);
 	ft_fduintdel(&ssl->word, ssl);
-	ft_printf("%.8x%.8x%.8x%.8x\n",
-	ssl->iv[0], ssl->iv[1], ssl->iv[2], ssl->iv[3]);
+	ft_printf("%.8x%.8x%.8x%.8x%.8x%.8x%.8x\n", ssl->uv[0], ssl->uv[1],
+	ssl->uv[2], ssl->uv[3], ssl->uv[4], ssl->uv[5], ssl->uv[6]);
 }
 
-void	def_with_arg(char **argv, int *i, t_ssl *ssl)
+void	flag_p224(t_ssl *ssl, int *i)
+{
+	def256(ssl, i);
+	*ssl->pqrs = *ssl->pqrs & 7;
+}
+
+void	def_with_arg224(char **argv, int *i, t_ssl *ssl)
 {
 	char		*file;
 
-	initialize_ivuv(ssl);
+	val224(ssl);
 	i[1] = disable_s(i[1]);
 	if (is_file(argv[i[0]]))
 	{
 		file = save_line(argv, i[0]);
-		ssl->block = padding5(file, ssl);
-		ssl->word = words(ssl);
-		rounds_and_fix(ssl);
+		ssl->block = padding256(file, ssl);
+		ssl->word = words256(ssl);
+		fix256(ssl);
 		ft_strdel(&file);
 		ft_fdintdel(&ssl->block, ssl);
 		ft_fduintdel(&ssl->word, ssl);
-		printdefwitharg(ssl, argv, i);
+		printfdefwitharg224(ssl, argv, i);
 	}
 	else if (is_directory(argv[i[0]]))
-		ft_printf("md5: %s: Is a directory\n", argv[i[0]]);
+		ft_printf("sha224: %s: Is a directory\n", argv[i[0]]);
 	else
-		ft_printf("ft_ssl: md5: %s: %s\n", argv[i[0]], strerror(errno));
+		ft_printf("ft_ssl: sha224: %s: %s\n", argv[i[0]], strerror(errno));
 }
 
-void	noarg(int argc, t_ssl *ssl, char **argv, int *i)
+void	flag_s224(char **argv, int *i, t_ssl *ssl)
 {
-	if (argc == 2 && !ft_strcmp(argv[1], "md5"))
+	int			len;
+
+	val224(ssl);
+	if ((len = ft_strchr_i(argv[i[0]], 's')) > 0 && argv[i[0]][len + 1])
+		ssl->block = padding256(argv[i[0]] + (len + 1), ssl);
+	else
 	{
-		def(ssl, i);
-		exit(0);
+		len = -1;
+		if (argv[(i[0]++) + 1])
+			ssl->block = padding256(argv[i[0]], ssl);
+		else
+		{
+			ft_printf("sha224: option requires an argument -- s\n"
+			"usage: sha224 [-pqrtx] [-s string] [files ...]\n");
+			exit(1);
+		}
 	}
-	else if (argc == 2 && !ft_strcmp(argv[1], "sha256"))
-	{
-		def256(ssl, i);
-		exit(0);
-	}
-	else if (argc == 2 && !ft_strcmp(argv[1], "sha512"))
-	{
-		def512(ssl, i);
-		exit(0);
-	}
-	else if (argc == 2 && !ft_strcmp(argv[1], "sha384"))
-	{
-		def384(ssl, i);
-		exit(0);
-	}
-	else if (argc == 2 && !ft_strcmp(argv[1], "sha224"))
-	{
-		def224(ssl, i);
-		exit(0);
-	}
+	ssl->word = words256(ssl);
+	fix256(ssl);
+	ft_fdintdel(&ssl->block, ssl);
+	ft_fduintdel(&ssl->word, ssl);
+	printflags224(ssl, argv, len, i);
+	i[1] = 1;
 }
 
-t_ssl	*inssl(int *i, int argc, char **argv)
-{
-	t_ssl *ssl;
-
-	ssl = (t_ssl *)malloc(sizeof(t_ssl));
-	ssl->block = NULL;
-	ssl->word = NULL;
-	ssl->pqrs = (int *)malloc(sizeof(int));
-	*ssl->pqrs = 0;
-	ssl->numblock = 0;
-	i[1] = 0;
-	i[0] = 2;
-	noarg(argc, ssl, argv, i);
-	return (ssl);
-}
-
-void	md5(int argc, char **argv)
+void	sha224(int argc, char **argv)
 {
 	t_ssl		*ssl;
 	int			i[2];
@@ -120,19 +108,19 @@ void	md5(int argc, char **argv)
 		flags(argv, i, ssl);
 		if (ISSAME(*ssl->pqrs, P))
 		{
-			flag_p(ssl, i);
+			flag_p224(ssl, i);
 			continue ;
 		}
 		else if (argv[i[0]] == NULL)
 		{
-			def(ssl, i);
+			def224(ssl, i);
 			break ;
 		}
 		if (((!ISSAME(*ssl->pqrs, P) && !ISSAME(*ssl->pqrs, S)
 		&& (argv[i[0]]))) || i[1] == 2)
-			def_with_arg(argv, i, ssl);
+			def_with_arg224(argv, i, ssl);
 		if (ISSAME(*ssl->pqrs, S) && i[1] != 2)
-			flag_s(argv, i, ssl);
+			flag_s224(argv, i, ssl);
 		i[0]++;
 	}
 	freethings(ssl);

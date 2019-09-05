@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/29 12:10:15 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/11 15:55:50 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/11 17:44:43 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ t_dsptch	g_dsptch_table[FUNCNUM] = {
 	{"sha256", &sha256},
 	{"sha512", &sha512},
 	{"sha384", &sha384},
+	{"sha224", &sha224},
 };
 
 void		dsptch(int argc, char **argv)
@@ -35,7 +36,8 @@ void		dsptch(int argc, char **argv)
 	}
 	ft_printf("ft_ssl: Error: '%s' is an invalid command.\n\n", argv[1]);
 	ft_printf("Standard commands:\n\n");
-	ft_printf("Message Digest commands:\nmd5\nsha256\n\n");
+	ft_printf("Message Digest commands:\nmd5\nsha224\nsha256"
+	"\nsha384\nsha512\n\n");
 	ft_printf("Cipher commands:\n");
 	exit(1);
 }

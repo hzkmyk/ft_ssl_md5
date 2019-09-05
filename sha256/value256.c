@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/04 18:08:26 by hmiyake           #+#    #+#             */
-/*   Updated: 2018/11/11 14:45:15 by hmiyake          ###   ########.fr       */
+/*   Updated: 2018/11/11 17:25:08 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,27 @@ const u_int32_t	g_sha256k[64] = {
 	0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208,
 	0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2
 };
+
+t_ssl			*val224(t_ssl *ssl)
+{
+	ssl->iv[0] = 0xc1059ed8;
+	ssl->iv[1] = 0x367cd507;
+	ssl->iv[2] = 0x3070dd17;
+	ssl->iv[3] = 0xf70e5939;
+	ssl->iv[4] = 0xffc00b31;
+	ssl->iv[5] = 0x68581511;
+	ssl->iv[6] = 0x64f98fa7;
+	ssl->iv[7] = 0xbefa4fa4;
+	ssl->uv[0] = 0xc1059ed8;
+	ssl->uv[1] = 0x367cd507;
+	ssl->uv[2] = 0x3070dd17;
+	ssl->uv[3] = 0xf70e5939;
+	ssl->uv[4] = 0xffc00b31;
+	ssl->uv[5] = 0x68581511;
+	ssl->uv[6] = 0x64f98fa7;
+	ssl->uv[7] = 0xbefa4fa4;
+	return (ssl);
+}
 
 t_ssl			*val256(t_ssl *ssl)
 {
